@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EVE DED Tracker 🚀
 
-## Getting Started
+A modern, high-performance web application designed to track and analyze your DED (Dead End) runs in EVE Online. Built to help Capsuleers manage their ledgers, measure their profit, and optimize their escalation farming.
 
-First, run the development server:
+## ✨ Features
 
+- 📊 **Detailed Run Tracking**: Record DED ratings, factions, loot value, and initial capital costs.
+- 💰 **Profit Analysis**: Automatically calculates net PnL (Profit and Loss) and average ISK per run.
+- 🎨 **Responsive & Themed UI**: Gorgeous UI powered by Tailwind CSS, with support for both Dark and Light modes. 
+- 🌐 **Internationalization (i18n)**: Seamlessly switch between languages (EN, ID) on the fly.
+- 🔐 **Secure Authentication**: Built-in authentication utilizing Supabase, integrating EVE SSO capabilities.
+- ⚡ **Fast & Modern Stack**: Built using Next.js 16 (App Router) + React 19 + Bun for extremely fast development and build times.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Runtime & Package Manager**: [Bun](https://bun.sh/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **UI Components**: [Shadcn UI](https://ui.shadcn.com/) & Lucide Icons
+- **Database & Auth**: [Supabase](https://supabase.com/)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Ensure you have [Bun](https://bun.sh/) installed on your machine.
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/NojinNojs/eve-ded-tracker.git
+cd eve-ded-tracker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies using Bun:
+```bash
+bun install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Setup environment variables:
+Create a `.env.local` file in the root directory and add your Supabase credentials.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-## Learn More
+4. Start the development server:
+```bash
+bun run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛡️ Security & Pre-commit
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- The `.gitignore` is fully configured to prevent sensitive `.env` files from being committed.
+- Run the Linter to ensure the codebase follows strict standard configurations:
+```bash
+bun run lint
+```
+- Build the production-ready project:
+```bash
+bun run build
+```
 
-## Deploy on Vercel
+## 🚢 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy this application is through [Vercel](https://vercel.com/), the creators of Next.js. The app is completely production-ready and optimized out-of-the-box.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push your repository to GitHub.
+2. Import the project in Vercel.
+3. Set your Environment Variables in the Vercel dashboard.
+4. Deploy!
+
+## 📝 License
+
+This project is licensed under the MIT License. EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide.

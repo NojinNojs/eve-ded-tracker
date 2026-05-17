@@ -1,26 +1,530 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ═══════════════════════════════════════════════
+ *  LIGHT MODE — warm cream, less harsh
+ * ═══════════════════════════════════════════════ */
+:root {
+  --background: #f5f0eb;
+  --foreground: #1a1a1a;
+  --card: #faf7f4;
+  --card-foreground: #1a1a1a;
+  --popover: #faf7f4;
+  --popover-foreground: #1a1a1a;
+  --primary: #1a1a1a;
+  --primary-foreground: #faf7f4;
+  --secondary: #ede8e3;
+  --secondary-foreground: #1a1a1a;
+  --muted: #ede8e3;
+  --muted-foreground: #78716c;
+  --accent: #ede8e3;
+  --accent-foreground: #1a1a1a;
+  --destructive: #ef4444;
+  --border: #1a1a1a;
+  --input: #1a1a1a;
+  --ring: #1a1a1a;
+  --chart-1: #22d3ee;
+  --chart-2: #a3e635;
+  --chart-3: #fbbf24;
+  --chart-4: #f472b6;
+  --chart-5: #f87171;
+  --radius: 0px;
+  --sidebar: #faf7f4;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #1a1a1a;
+  --sidebar-primary-foreground: #faf7f4;
+  --sidebar-accent: #ede8e3;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: #1a1a1a;
+  --sidebar-ring: #1a1a1a;
+
+  /* Neobrutal accent palette */
+  --nb-cyan: #22d3ee;
+  --nb-lime: #a3e635;
+  --nb-pink: #f472b6;
+  --nb-amber: #fbbf24;
+  --nb-violet: #a78bfa;
+  --nb-red: #f87171;
+  --nb-green: #4ade80;
+
+  /* Semantic tokens */
+  --nb-surface: #faf7f4;
+  --nb-border: #1a1a1a;
+  --nb-text: #1a1a1a;
+  --nb-text-muted: #78716c;
+  --nb-text-faint: #a8a29e;
+  --nb-shadow: #1a1a1a;
+  --nb-hover-bg: #ede8e3;
+  --nb-surface-alt: #f0ebe5;
+  /* Dark-mode-safe accent tints for stat card backgrounds */
+  --nb-stat-cyan: #22d3ee;
+  --nb-stat-lime: #a3e635;
+  --nb-stat-amber: #fbbf24;
+  --nb-stat-pink: #f472b6;
+}
+
+/* ═══════════════════════════════════════════════
+ *  DARK MODE — deep space
+ * ═══════════════════════════════════════════════ */
+.dark {
+  --background: #0c0c12;
+  --foreground: #e8e6e3;
+  --card: #161620;
+  --card-foreground: #e8e6e3;
+  --popover: #161620;
+  --popover-foreground: #e8e6e3;
+  --primary: #e8e6e3;
+  --primary-foreground: #0c0c12;
+  --secondary: #22222e;
+  --secondary-foreground: #e8e6e3;
+  --muted: #22222e;
+  --muted-foreground: #9ca3af;
+  --accent: #22222e;
+  --accent-foreground: #e8e6e3;
+  --destructive: #ef4444;
+  --border: #3a3a4e;
+  --input: #3a3a4e;
+  --ring: #22d3ee;
+  --sidebar: #161620;
+  --sidebar-foreground: #e8e6e3;
+  --sidebar-primary: #e8e6e3;
+  --sidebar-primary-foreground: #0c0c12;
+  --sidebar-accent: #22222e;
+  --sidebar-accent-foreground: #e8e6e3;
+  --sidebar-border: #3a3a4e;
+  --sidebar-ring: #22d3ee;
+
+  --nb-surface: #161620;
+  --nb-border: #3a3a4e;
+  --nb-text: #e8e6e3;
+  --nb-text-muted: #9ca3af;
+  --nb-text-faint: #6b7280;
+  --nb-shadow: #000000;
+  --nb-hover-bg: #22222e;
+  --nb-surface-alt: #111118;
+  /* In dark mode, stat cards use the exact same vibrant neon colors as light mode */
+  --nb-stat-cyan: #22d3ee;
+  --nb-stat-lime: #a3e635;
+  --nb-stat-amber: #fbbf24;
+  --nb-stat-pink: #f472b6;
+}
+
+/* ─── Base ──────────────────────────── */
+* { scrollbar-width: thin; }
+:root { scrollbar-color: #d4d4d4 transparent; }
+.dark { scrollbar-color: #3a3a4e transparent; }
+
+/* Hide native number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 body {
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Neobrutal card ────────────────── */
+.nb-card {
+  border: 3px solid var(--nb-border);
+  box-shadow: 5px 5px 0px var(--nb-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
+  background-color: var(--nb-surface);
+}
+.nb-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px var(--nb-shadow);
+}
+.nb-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--nb-shadow);
+}
+
+/* ─── Stat card color variants ──────── */
+.nb-stat-cyan  { background: var(--nb-stat-cyan) !important; }
+.nb-stat-lime  { background: var(--nb-stat-lime) !important; }
+.nb-stat-amber { background: var(--nb-stat-amber) !important; }
+.nb-stat-pink  { background: var(--nb-stat-pink) !important; }
+
+/* ─── Neobrutal button ──────────────── */
+.nb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font-weight: 800;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 3px solid var(--nb-border);
+  box-shadow: 4px 4px 0px var(--nb-shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+  color: var(--nb-text);
+}
+.nb-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--nb-shadow);
+}
+.nb-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--nb-shadow);
+}
+.nb-btn-primary {
+  background: var(--nb-cyan);
+  color: #1a1a1a;
+}
+.nb-btn-secondary {
+  background: var(--nb-surface);
+  color: var(--nb-text);
+}
+.nb-btn-danger {
+  background: var(--nb-red);
+  color: #1a1a1a;
+}
+
+/* ─── Neobrutal input ───────────────── */
+.nb-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  font-family: var(--font-geist-mono, monospace);
+  font-size: 0.875rem;
+  background: var(--nb-surface);
+  color: var(--nb-text);
+  border: 3px solid var(--nb-border);
+  box-shadow: 3px 3px 0px var(--nb-shadow);
+  outline: none;
+  transition: box-shadow 0.1s ease, background 0.3s ease;
+}
+.nb-input:focus { box-shadow: 5px 5px 0px var(--nb-shadow); }
+.nb-input::placeholder { color: var(--nb-text-faint); }
+
+/* ─── Neobrutal select ──────────────── */
+.nb-select {
+  border: 3px solid var(--nb-border) !important;
+  box-shadow: 3px 3px 0px var(--nb-shadow) !important;
+  border-radius: 0 !important;
+  background: var(--nb-surface) !important;
+  color: var(--nb-text) !important;
+}
+
+/* ─── Neobrutal badge ───────────────── */
+.nb-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--nb-border);
+  box-shadow: 2px 2px 0px var(--nb-shadow);
+  color: #1a1a1a;
+}
+
+/* ─── Neobrutal navbar ──────────────── */
+.nb-nav {
+  background: var(--nb-surface);
+  border-bottom: 3px solid var(--nb-border);
+  transition: background 0.3s ease;
+}
+
+/* ─── Neobrutal table row ───────────── */
+.nb-row {
+  border-bottom: 2px solid var(--nb-border);
+  transition: background 0.1s ease;
+}
+.nb-row:hover { background: color-mix(in srgb, var(--nb-amber) 30%, var(--nb-surface)); }
+
+/* ─── Profit / Loss ─────────────────── */
+.text-profit { color: #16a34a; font-weight: 800; }
+.text-loss   { color: #dc2626; font-weight: 800; }
+
+/* ─── Neobrutal toggle ──────────────── */
+.nb-toggle {
+  width: 48px; height: 28px;
+  border: 3px solid var(--nb-border);
+  box-shadow: 2px 2px 0px var(--nb-shadow);
+  position: relative; cursor: pointer;
+  transition: background 0.15s;
+  background: var(--nb-surface);
+}
+.nb-toggle-knob {
+  width: 18px; height: 18px;
+  background: var(--nb-text);
+  position: absolute; top: 2px; left: 2px;
+  transition: transform 0.15s;
+}
+.nb-toggle.active { background: var(--nb-lime); }
+.nb-toggle.active .nb-toggle-knob { transform: translateX(20px); background: #1a1a1a; }
+
+/* ─── Animations ────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up { animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-down { animation: fade-down 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in { animation: fade-in 0.4s ease both; }
+.animate-slide-left { animation: slide-in-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-right { animation: slide-in-right 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-scale-in { animation: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
+.animate-wiggle { animation: wiggle 0.4s ease; }
+.animate-count-up { animation: count-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Stagger */
+.stagger > * { animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 70ms; }
+.stagger > *:nth-child(3) { animation-delay: 140ms; }
+.stagger > *:nth-child(4) { animation-delay: 210ms; }
+.stagger > *:nth-child(5) { animation-delay: 280ms; }
+.stagger > *:nth-child(6) { animation-delay: 350ms; }
+
+/* ─── Hover utilities ───────────────── */
+.hover-lift { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; }
+.hover-lift:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0px var(--nb-shadow); }
+.hover-lift:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0px var(--nb-shadow); }
+.hover-press { transition: transform 0.1s ease, box-shadow 0.1s ease; }
+.hover-press:active { transform: translate(3px, 3px); box-shadow: 0px 0px 0px var(--nb-shadow); }
+
+/* Focus ring */
+.nb-focus:focus-visible { outline: 3px solid var(--nb-cyan); outline-offset: 2px; }
+
+/* ─── Language switcher ─────────────── */
+.lang-switch {
+  display: inline-flex; align-items: center;
+  border: 3px solid var(--nb-border);
+  box-shadow: 3px 3px 0px var(--nb-shadow);
+  overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;
+}
+.lang-switch:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0px var(--nb-shadow); }
+.lang-switch button {
+  padding: 0.375rem 0.75rem; font-size: 0.75rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer; border: none; position: relative;
+}
+.lang-switch button + button { border-left: 2px solid var(--nb-border); }
+.lang-switch button.active { background: var(--nb-text); color: var(--nb-cyan); }
+.lang-switch button:not(.active) { background: var(--nb-surface); color: var(--nb-text-muted); }
+.lang-switch button:not(.active):hover { background: var(--nb-hover-bg); color: var(--nb-text); }
+
+/* ─── Theme toggle ──────────────────── */
+.theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border: 3px solid var(--nb-border);
+  box-shadow: 3px 3px 0px var(--nb-shadow);
+  background: var(--nb-surface); cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+}
+.theme-toggle:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0px var(--nb-shadow); background: var(--nb-amber); }
+.theme-toggle:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px var(--nb-shadow); }
+
+/* ─── Spinner ───────────────────────── */
+.nb-spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 3px solid var(--nb-border);
+  border-top-color: var(--nb-cyan);
+  border-radius: 50%; animation: spin 0.6s linear infinite; flex-shrink: 0;
+}
+
+/* ─── Scan progress ─────────────────── */
+.nb-progress { height: 4px; background: var(--nb-cyan); animation: progress 1.5s ease-in-out infinite; }
+@keyframes progress { 0% { width: 5%; } 50% { width: 80%; } 100% { width: 5%; } }
+
+/* ─── Range ─────────────────────────── */
+.nb-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 6px;
+  background: var(--nb-hover-bg);
+  border: 2px solid var(--nb-border);
+  outline: none; cursor: pointer;
+}
+.nb-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px;
+  background: var(--nb-cyan); border: 3px solid var(--nb-border);
+  box-shadow: 2px 2px 0px var(--nb-shadow); cursor: pointer;
+}
+.nb-range::-moz-range-thumb {
+  width: 20px; height: 20px;
+  background: var(--nb-cyan); border: 3px solid var(--nb-border);
+  box-shadow: 2px 2px 0px var(--nb-shadow); cursor: pointer;
+}
+
+/* ─── Marquee strip ─────────────────── */
+.marquee-strip {
+  overflow: hidden;
+  border-top: 3px solid var(--nb-border);
+  border-bottom: 3px solid var(--nb-border);
+  background: var(--nb-amber);
+  padding: 0.5rem 0; white-space: nowrap;
+}
+.marquee-inner { display: inline-flex; animation: marquee 25s linear infinite; }
+.marquee-strip:hover .marquee-inner { animation-play-state: paused; }
+
+/* ─── Tooltip on hover ──────────────── */
+.nb-tooltip { position: relative; }
+.nb-tooltip::after {
+  content: attr(data-tip); position: absolute;
+  bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 0.25rem 0.625rem; font-size: 0.6875rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap;
+  background: var(--nb-text); color: var(--nb-surface);
+  border: 2px solid var(--nb-border);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.nb-tooltip:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ─── Manual ISK input tab ──────────── */
+.input-mode-tabs {
+  display: flex; border: 2px solid var(--nb-border); overflow: hidden;
+}
+.input-mode-tabs button {
+  flex: 1; padding: 0.5rem 0.75rem; font-size: 0.7rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;
+  border: none; background: var(--nb-surface); color: var(--nb-text-muted);
+  transition: background 0.15s, color 0.15s;
+}
+.input-mode-tabs button + button { border-left: 2px solid var(--nb-border); }
+.input-mode-tabs button.active { background: var(--nb-cyan); color: #1a1a1a; }
+.input-mode-tabs button:not(.active):hover { background: var(--nb-hover-bg); color: var(--nb-text); }
+
+/* ─── Sonner Toast — Neobrutal style ── */
+[data-sonner-toaster] [data-sonner-toast] {
+  --border-radius: 0px !important;
+  border: 3px solid var(--nb-border) !important;
+  box-shadow: 4px 4px 0px var(--nb-shadow) !important;
+  background: var(--nb-surface) !important;
+  color: var(--nb-text) !important;
+  font-weight: 700 !important;
+  font-family: var(--font-geist-sans) !important;
+}
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] {
+  background: var(--nb-lime) !important;
+  color: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+[data-sonner-toaster] [data-sonner-toast][data-type="error"] {
+  background: var(--nb-red) !important;
+  color: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+[data-sonner-toaster] [data-sonner-toast][data-type="info"] {
+  background: var(--nb-cyan) !important;
+  color: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+[data-sonner-toaster] [data-sonner-toast] [data-title] {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  font-size: 0.8rem !important;
+}
+[data-sonner-toaster] [data-sonner-toast] [data-description] {
+  font-weight: 600 !important;
+  font-family: var(--font-geist-mono) !important;
+  font-size: 0.75rem !important;
+}
+[data-sonner-toaster] [data-sonner-toast] [data-close-button] {
+  border: 2px solid currentColor !important;
+  border-radius: 0 !important;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground; }
 }
