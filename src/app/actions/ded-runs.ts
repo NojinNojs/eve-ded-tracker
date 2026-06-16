@@ -41,7 +41,17 @@ export async function submitDedRun(data: DedRunInsert): Promise<ActionResult> {
   if (data.capital_cost < 0 || data.capital_cost > 1e15) return { success: false, error: 'Invalid capital cost.' };
   if (data.loot_value < 0 || data.loot_value > 1e15) return { success: false, error: 'Invalid loot value.' };
 
+  const validModes = ['buy', 'sell', 'split'];
+  if (!validModes.includes(data.pricing_mode)) return { success: false, error: 'Invalid pricing mode.' };
+  if (typeof data.pricing_percent !== 'number' || data.pricing_percent < 0 || data.pricing_percent > 200) {
+    return { success: false, error: 'Invalid pricing percent.' };
+  }
+
   const netProfit = data.loot_value - data.capital_cost;
+
+  // Sanitize janice_code — alphanumeric only
+  const rawJaniceCode = data.janice_code ?? null;
+  const safeJaniceCode = rawJaniceCode && /^[a-zA-Z0-9]+$/.test(rawJaniceCode) ? rawJaniceCode : null;
 
   const supabase = await createClient();
   const { error } = await supabase.from('ded_runs').insert({
@@ -54,6 +64,7 @@ export async function submitDedRun(data: DedRunInsert): Promise<ActionResult> {
     net_profit: netProfit,
     pricing_mode: data.pricing_mode,
     pricing_percent: data.pricing_percent,
+    janice_code: safeJaniceCode,
   });
 
   if (error) {

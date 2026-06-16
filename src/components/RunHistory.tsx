@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition, useOptimistic } from 'react';
-import { Trash2, History, FileText, AlertTriangle, ArrowUpDown, ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Trash2, History, FileText, AlertTriangle, ArrowUpDown, ArrowDown, ArrowUp, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { formatISK, formatISKSigned, formatDate } from '@/lib/format';
 import { deleteDedRun } from '@/app/actions/ded-runs';
 import { useI18n } from '@/lib/i18n';
@@ -180,6 +180,17 @@ export default function RunHistory({ runs }: Props) {
                   
                   <div className="flex items-center justify-between mt-1">
                     <span className="text-sm font-bold uppercase text-[var(--nb-text)]">{run.faction}</span>
+                    {run.janice_code && (
+                      <a
+                        href={`https://janice.e-351.com/a/${run.janice_code}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-1 inline-flex items-center text-[9px] font-bold text-blue-600 dark:text-blue-400 hover:underline"
+                        title="View on Janice"
+                      >
+                        <ExternalLink className="size-3" />
+                      </a>
+                    )}
                     <span className={cn(
                       'font-mono text-base font-black',
                       run.net_profit >= 0 ? 'text-profit' : 'text-loss'
@@ -272,6 +283,17 @@ export default function RunHistory({ runs }: Props) {
                     <td className="px-3 py-3">
                       <span className="text-sm font-black">{run.ded_type}</span>
                       <span className="ml-2 text-sm font-bold text-[var(--nb-text-muted)]">{run.faction}</span>
+                      {run.janice_code && (
+                        <a
+                          href={`https://janice.e-351.com/a/${run.janice_code}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 inline-flex items-center gap-0.5 text-[9px] font-bold text-blue-600 dark:text-blue-400 hover:underline align-middle"
+                          title="View on Janice"
+                        >
+                          <ExternalLink className="size-3" />
+                        </a>
+                      )}
                     </td>
                     <td className="px-3 py-3">
                       <span className={cn(

@@ -8,6 +8,21 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.3.0',
+    date: '2026-06-16',
+    title: 'Janice API v2 Integration',
+    features: [
+      'Full Janice API v2 integration with real-time appraisals',
+      'Per-item loot breakdown with buy/sell/split prices',
+      'Janice appraisal link stored and displayed in run details',
+      'Enabled Janice tab in loot input (previously disabled)',
+    ],
+    fixes: [
+      'Migrated from deprecated Janice v1 endpoint to official v2 API',
+      'Server-side API key management for improved security',
+    ]
+  },
+  {
     version: 'v1.2.1',
     date: '2026-06-16',
     title: 'Faction Logging Fixes & UI Polish',

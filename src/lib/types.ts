@@ -28,6 +28,7 @@ export interface DedRun {
   net_profit: number;
   pricing_mode: PricingMode;
   pricing_percent: number;
+  janice_code: string | null;
   created_at: string;
 }
 
@@ -40,6 +41,7 @@ export interface DedRunInsert {
   loot_value: number;
   pricing_mode: PricingMode;
   pricing_percent: number;
+  janice_code?: string | null;
 }
 
 /** Aggregated stats for the dashboard cards */
@@ -51,30 +53,6 @@ export interface DashboardStats {
     dedType: DedType;
     profit: number;
   } | null;
-}
-
-/** Janice API item from the response */
-export interface JaniceItem {
-  typeName: string;
-  typeID: number;
-  buyPrice: number;
-  buyPrice5Pct: number;
-  sellPrice: number;
-  sellPrice5Pct: number;
-  splitPrice: number;
-  splitPrice5Pct: number;
-  quantity: number;
-}
-
-/** Shape of the Janice appraisal response */
-export interface JaniceAppraisalResponse {
-  totalBuyPrice: number;
-  totalBuyPrice5Pct: number;
-  totalSellPrice: number;
-  totalSellPrice5Pct: number;
-  totalSplitPrice: number;
-  totalSplitPrice5Pct: number;
-  items: JaniceItem[];
 }
 
 /** Dropdown option helper */

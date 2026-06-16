@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import {
-  Send, Search, TrendingUp, TrendingDown, Package, Keyboard, AlertTriangle
+  Send, Search, TrendingUp, TrendingDown, Package, Keyboard, AlertTriangle, ExternalLink
 } from 'lucide-react';
-import { fetchJaniceAppraisal } from '@/app/actions/janice';
+import { fetchJaniceAppraisal, type JaniceResult, type JaniceResultItem } from '@/app/actions/janice';
 import { submitDedRun } from '@/app/actions/ded-runs';
 import { parseISKInput, formatISK, formatISKFull } from '@/lib/format';
 import { useI18n } from '@/lib/i18n';
@@ -35,6 +35,8 @@ export default function DedRunForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lootInputMode, setLootInputMode] = useState<LootInputMode>('manual');
   const [manualLootRaw, setManualLootRaw] = useState('');
+  const [janiceResult, setJaniceResult] = useState<JaniceResult | null>(null);
+  const [janiceCode, setJaniceCode] = useState<string | null>(null);
 
   const capitalCost = isPurchased ? parseISKInput(capitalCostRaw) : 0;
   const netProfit = lootValue - capitalCost;
@@ -42,12 +44,17 @@ export default function DedRunForm() {
   async function handleFetchJanice() {
     if (!rawLootText.trim()) { toast.error('Paste your loot text first.'); return; }
     setJaniceLoading(true);
+    setJaniceResult(null);
     try {
       const result = await fetchJaniceAppraisal(rawLootText, pricingMode, pricingPercent);
       setJaniceLoading(false);
       if (result.success) {
-        setLootValue(result.value);
-        setTimeout(() => toast.success(`Appraised: ${formatISK(result.value)}`), 50);
+        setLootValue(result.totalValue);
+        setJaniceResult(result);
+        setJaniceCode(result.janiceCode);
+        setTimeout(() => toast.success(`Appraised: ${formatISK(result.totalValue)}`, {
+          description: result.janiceCode ? `Janice: ${result.janiceCode}` : undefined,
+        }), 50);
       } else {
         setTimeout(() => toast.error(result.error ?? 'Appraisal failed'), 50);
       }
@@ -82,6 +89,7 @@ export default function DedRunForm() {
         is_purchased: isPurchased, capital_cost: capitalCost,
         loot_value: lootValue, pricing_mode: pricingMode,
         pricing_percent: pricingPercent,
+        janice_code: janiceCode,
       });
       
       setIsSubmitting(false); // Stop loading before toast
@@ -90,6 +98,7 @@ export default function DedRunForm() {
         setCapitalCostRaw(''); setRawLootText('');
         setLootValue(0); setIsPurchased(false);
         setManualLootRaw('');
+        setJaniceResult(null); setJaniceCode(null);
         setTimeout(() => toast.success('Run logged!', { description: `${dedType} ${faction}` }), 50);
       } else {
         setTimeout(() => toast.error(result.error ?? 'Failed.'), 50);
@@ -208,19 +217,17 @@ export default function DedRunForm() {
             <div className="input-mode-tabs flex gap-2">
               <button
                 type="button"
-                disabled
-                className="opacity-50 cursor-not-allowed border-2 border-[var(--nb-border)] px-3 py-1 bg-[var(--nb-surface)]"
-                title="Janice API is currently in development"
+                onClick={() => { setLootInputMode('janice'); setManualLootRaw(''); setLootValue(0); setJaniceResult(null); setJaniceCode(null); }}
+                className={cn('border-2 border-[var(--nb-border)] px-3 py-1 transition-all', lootInputMode === 'janice' ? 'bg-[var(--nb-cyan)] text-black shadow-[2px_2px_0px_var(--nb-shadow)]' : 'bg-[var(--nb-surface)] hover:bg-[var(--nb-hover-bg)]')}
               >
-                <span className="flex items-center gap-1 text-[var(--nb-text-muted)]">
+                <span className="flex items-center gap-1">
                   <Search className="size-3" strokeWidth={2.5} />
-                  <span className="line-through">Janice</span>
-                  <span className="text-[9px] text-red-500 font-bold ml-1 uppercase bg-red-100 dark:bg-red-900/30 px-1 border border-red-500">Incoming</span>
+                  Janice
                 </span>
               </button>
               <button
                 type="button"
-                onClick={() => { setLootInputMode('manual'); setRawLootText(''); setLootValue(0); }}
+                onClick={() => { setLootInputMode('manual'); setRawLootText(''); setLootValue(0); setJaniceResult(null); setJaniceCode(null); }}
                 className={cn('border-2 border-[var(--nb-border)] px-3 py-1 transition-all', lootInputMode === 'manual' ? 'bg-[var(--nb-cyan)] text-black shadow-[2px_2px_0px_var(--nb-shadow)]' : 'bg-[var(--nb-surface)] hover:bg-[var(--nb-hover-bg)]')}
               >
                 <span className="flex items-center gap-1">
@@ -305,6 +312,44 @@ export default function DedRunForm() {
                   <><Search className="size-4 transition-transform group-hover:scale-125" strokeWidth={2.5} /> {t('form.fetch')}</>
                 )}
               </button>
+
+              {/* Janice item breakdown */}
+              {janiceResult && janiceResult.items.length > 0 && (
+                <div className="border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[3px_3px_0px_var(--nb-shadow)] animate-scale-in">
+                  <div className="flex items-center justify-between border-b-3 border-[var(--nb-border)] bg-[var(--nb-hover-bg)] px-3 py-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[var(--nb-text-muted)]">
+                      Item Breakdown ({janiceResult.items.length} items)
+                    </span>
+                    {janiceCode && (
+                      <a
+                        href={`https://janice.e-351.com/a/${janiceCode}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                      >
+                        <ExternalLink className="size-3" />
+                        Janice Link
+                      </a>
+                    )}
+                  </div>
+                  <div className="max-h-[200px] overflow-y-auto">
+                    {janiceResult.items.map((item, i) => (
+                      <div
+                        key={`${item.typeId}-${i}`}
+                        className="flex items-center justify-between px-3 py-2 border-b border-[var(--nb-border)] last:border-b-0 hover:bg-[var(--nb-hover-bg)] transition-colors"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="text-[10px] font-black text-[var(--nb-text-faint)] tabular-nums">{item.quantity}x</span>
+                          <span className="text-xs font-bold text-[var(--nb-text)] truncate">{item.name}</span>
+                        </div>
+                        <span className="font-mono text-xs font-bold text-[var(--nb-text-muted)] whitespace-nowrap ml-2">
+                          {formatISK(pricingMode === 'sell' ? item.sellPriceTotal : pricingMode === 'split' ? item.splitPriceTotal : item.buyPriceTotal)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             /* Manual ISK input */
