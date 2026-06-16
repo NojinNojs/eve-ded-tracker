@@ -3,7 +3,7 @@
 import { TrendingUp, Hash, BarChart3, Trophy } from 'lucide-react';
 import { formatISK, formatISKSigned } from '@/lib/format';
 import { useI18n } from '@/lib/i18n';
-import type { DashboardStats, DedRun } from '@/lib/types';
+import type { DashboardStats, DedRun, Faction, DedType } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -20,47 +20,58 @@ const cardColors = [
 
 export default function StatsDashboard({ stats, runs }: Props) {
   const { t } = useI18n();
-  const avgIsk = stats.totalRuns > 0 ? stats.totalProfit / stats.totalRuns : 0;
+  const safeTotalRuns = stats?.totalRuns > 0 ? stats.totalRuns : (runs?.length || 0);
+  const safeTotalProfit = stats?.totalRuns > 0 ? stats.totalProfit : (runs?.reduce((sum, r) => sum + r.net_profit, 0) || 0);
+  const avgIsk = safeTotalRuns > 0 ? safeTotalProfit / safeTotalRuns : 0;
 
-  const cards = [
-    {
-      label: t('stat.net_pnl'), icon: TrendingUp,
-      value: stats.totalRuns > 0 ? formatISKSigned(stats.totalProfit) : '—',
-      sub: t('stat.net_pnl.sub'),
-    },
-    {
-      label: t('stat.total_runs'), icon: Hash,
-      value: String(stats.totalRuns),
-      sub: t('stat.total_runs.sub'),
-    },
-    {
-      label: t('stat.avg_isk_per_run') ?? 'Avg Profit / Run', icon: BarChart3,
-      value: stats.totalRuns > 0 ? formatISK(avgIsk) : '—',
-      sub: t('stat.avg_isk_per_run.sub') ?? 'Average net profit per run',
-    },
-    {
-      label: t('stat.best_run'), icon: Trophy,
-      value: stats.mostProfitable?.faction ?? '—',
-      sub: stats.mostProfitable
-        ? `${stats.mostProfitable.dedType} · ${formatISK(stats.mostProfitable.profit)}`
-        : t('stat.best_run.sub'),
-    },
-  ];
-
-  // Specific averages breakdown
+  // Specific averages breakdown (we need this anyway for the bottom section)
   const breakdownData = runs?.reduce((acc, run) => {
     const key = `${run.faction} ${run.ded_type}`;
     if (!acc[key]) acc[key] = { faction: run.faction, dedType: run.ded_type, totalProfit: 0, count: 0 };
     acc[key].totalProfit += run.net_profit;
     acc[key].count += 1;
     return acc;
-  }, {} as Record<string, { faction: string, dedType: string, totalProfit: number, count: number }>);
+  }, {} as Record<string, { faction: Faction, dedType: DedType, totalProfit: number, count: number }>);
 
   const breakdownList = breakdownData 
     ? Object.values(breakdownData)
         .map(b => ({ ...b, avgProfit: b.totalProfit / b.count }))
         .sort((a, b) => b.avgProfit - a.avgProfit)
     : [];
+
+  let safeBestRun = stats?.mostProfitable;
+  if (!safeBestRun && breakdownList.length > 0) {
+    // Fallback: finding the best combo by total profit if RPC failed
+    const best = [...breakdownList].sort((a, b) => b.totalProfit - a.totalProfit)[0];
+    if (best) {
+      safeBestRun = { faction: best.faction, dedType: best.dedType, profit: best.totalProfit };
+    }
+  }
+
+  const cards = [
+    {
+      label: t('stat.net_pnl') ?? 'NET PNL', icon: TrendingUp,
+      value: safeTotalRuns > 0 ? formatISKSigned(safeTotalProfit) : '—',
+      sub: t('stat.net_pnl.sub') ?? 'Total profit across all runs',
+    },
+    {
+      label: t('stat.total_runs') ?? 'TOTAL RUNS', icon: Hash,
+      value: String(safeTotalRuns),
+      sub: t('stat.total_runs.sub') ?? 'DED escalations completed',
+    },
+    {
+      label: t('stat.avg_isk_per_run') ?? 'AVG PROFIT / RUN', icon: BarChart3,
+      value: safeTotalRuns > 0 ? formatISK(avgIsk) : '—',
+      sub: t('stat.avg_isk_per_run.sub') ?? 'Average net profit per run',
+    },
+    {
+      label: t('stat.best_run') ?? 'BEST RUN', icon: Trophy,
+      value: safeBestRun?.faction ?? '—',
+      sub: safeBestRun
+        ? `${safeBestRun.dedType} · ${formatISK(safeBestRun.profit)}`
+        : (t('stat.best_run.sub') ?? 'No runs recorded'),
+    },
+  ];
 
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 stagger">
