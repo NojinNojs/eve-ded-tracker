@@ -25,7 +25,7 @@ export interface EveCharacter {
  * This avoids collisions and creates a unique identity per character.
  */
 export function characterEmail(characterId: number): string {
-  return `eve-${characterId}@eveonline.local`;
+  return `eve-${characterId}@eveonline.com`;
 }
 
 /**

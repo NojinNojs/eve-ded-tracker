@@ -37,26 +37,36 @@ export async function GET(request: Request) {
 
   const clientId = process.env.EVE_SSO_CLIENT_ID!;
   const clientSecret = process.env.EVE_SSO_SECRET_KEY!;
-  const callbackUrl = `${origin}/auth/callback`;
+  const callbackUrl = process.env.EVE_SSO_CALLBACK_URL ?? `${origin}/auth/callback`;
+
+
 
   try {
     // ── Step 1: Exchange code for access token ──────────
+    const tokenBody = new URLSearchParams({
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri: callbackUrl,
+    });
+    const basicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+
     const tokenRes = await fetch(EVE_SSO.TOKEN, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+        'Authorization': `Basic ${basicAuth}`,
+        'User-Agent': 'EVE-DED-Tracker/dev (contact: dev@localhost)',
       },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: callbackUrl,
-      }),
+      body: tokenBody,
     });
+
+
 
     if (!tokenRes.ok) {
       const errText = await tokenRes.text();
-      console.error('EVE SSO token exchange failed:', errText);
+      // strip HTML tags to get the actual error message
+      const clean = errText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 400);
+      console.error('[EVE SSO DEBUG] token error  :', clean);
       return NextResponse.redirect(
         `${origin}?error=${encodeURIComponent('Token exchange failed')}`
       );

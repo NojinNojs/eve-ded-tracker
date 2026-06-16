@@ -34,8 +34,13 @@ export async function fetchJaniceAppraisal(
   mode: PricingMode = 'buy',
   percent: number = 95,
 ): Promise<JaniceResult> {
-  if (!rawLootText.trim()) {
+  const trimmedLoot = rawLootText.trim();
+  if (!trimmedLoot) {
     return { success: false, value: 0, error: 'Loot text cannot be empty.' };
+  }
+  
+  if (trimmedLoot.length > 20000) {
+    return { success: false, value: 0, error: 'Payload too large. Limit is 20,000 characters.' };
   }
 
   try {
@@ -47,7 +52,7 @@ export async function fetchJaniceAppraisal(
         'X-Janice-Market': '2',       // Jita (The Forge)
         'X-Janice-Persist': 'false',
       },
-      body: rawLootText,
+      body: trimmedLoot,
     });
 
     if (!response.ok) {

@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     );
   }
 
-  const callbackUrl = `${origin}/auth/callback`;
+  const callbackUrl = process.env.EVE_SSO_CALLBACK_URL ?? `${origin}/auth/callback`;
 
   // Build EVE SSO authorize URL with required params
   const params = new URLSearchParams({

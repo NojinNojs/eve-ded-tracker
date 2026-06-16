@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import {
-  Send, Search, TrendingUp, TrendingDown, Package, Keyboard,
+  Send, Search, TrendingUp, TrendingDown, Package, Keyboard, AlertTriangle
 } from 'lucide-react';
 import { fetchJaniceAppraisal } from '@/app/actions/janice';
 import { submitDedRun } from '@/app/actions/ded-runs';
@@ -18,9 +18,6 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
-interface Props {
-  onRunSubmitted: () => void;
-}
 
 type LootInputMode = 'janice' | 'manual';
 
@@ -37,19 +34,19 @@ const pricingModeItems = [
   ...PRICING_MODES.map((p) => ({ label: p.label, value: p.value })),
 ];
 
-export default function DedRunForm({ onRunSubmitted }: Props) {
+export default function DedRunForm() {
   const { t, locale } = useI18n();
-  const [dedType, setDedType] = useState<DedType>('10/10');
-  const [faction, setFaction] = useState<Faction>('Guristas');
+  const [dedType, setDedType] = useState<DedType | null>(null);
+  const [faction, setFaction] = useState<Faction | null>(null);
   const [isPurchased, setIsPurchased] = useState(false);
   const [capitalCostRaw, setCapitalCostRaw] = useState('');
   const [rawLootText, setRawLootText] = useState('');
   const [lootValue, setLootValue] = useState<number>(0);
-  const [pricingMode, setPricingMode] = useState<PricingMode>('buy');
-  const [pricingPercent, setPricingPercent] = useState(95);
+  const [pricingMode, setPricingMode] = useState<PricingMode>('split');
+  const [pricingPercent, setPricingPercent] = useState(100);
   const [janiceLoading, setJaniceLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const [lootInputMode, setLootInputMode] = useState<LootInputMode>('janice');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lootInputMode, setLootInputMode] = useState<LootInputMode>('manual');
   const [manualLootRaw, setManualLootRaw] = useState('');
 
   const capitalCost = isPurchased ? parseISKInput(capitalCostRaw) : 0;
@@ -60,16 +57,16 @@ export default function DedRunForm({ onRunSubmitted }: Props) {
     setJaniceLoading(true);
     try {
       const result = await fetchJaniceAppraisal(rawLootText, pricingMode, pricingPercent);
+      setJaniceLoading(false);
       if (result.success) {
         setLootValue(result.value);
-        toast.success(`Appraised: ${formatISK(result.value)}`);
+        setTimeout(() => toast.success(`Appraised: ${formatISK(result.value)}`), 50);
       } else {
-        toast.error(result.error ?? 'Appraisal failed');
+        setTimeout(() => toast.error(result.error ?? 'Appraisal failed'), 50);
       }
     } catch {
-      toast.error('Network error');
-    } finally {
       setJaniceLoading(false);
+      setTimeout(() => toast.error('Network error'), 50);
     }
   }
 
@@ -82,24 +79,38 @@ export default function DedRunForm({ onRunSubmitted }: Props) {
     setLootValue(parseISKInput(v));
   }
 
-  function handleSubmit() {
-    startTransition(async () => {
+  const [formError, setFormError] = useState<string | null>(null);
+
+  async function handleSubmit() {
+    setFormError(null);
+    if (!dedType || !faction) {
+      setFormError(t('form.error.missing_selection') ?? 'Please select DED Level and Faction.');
+      toast.error(t('form.error.missing_selection') ?? 'Please select DED Level and Faction.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
       const result = await submitDedRun({
         ded_type: dedType, faction,
         is_purchased: isPurchased, capital_cost: capitalCost,
         loot_value: lootValue, pricing_mode: pricingMode,
         pricing_percent: pricingPercent,
       });
+      
+      setIsSubmitting(false); // Stop loading before toast
+
       if (result.success) {
-        toast.success('Run logged!', { description: `${dedType} ${faction}` });
         setCapitalCostRaw(''); setRawLootText('');
         setLootValue(0); setIsPurchased(false);
         setManualLootRaw('');
-        onRunSubmitted();
+        setTimeout(() => toast.success('Run logged!', { description: `${dedType} ${faction}` }), 50);
       } else {
-        toast.error(result.error ?? 'Failed.');
+        setTimeout(() => toast.error(result.error ?? 'Failed.'), 50);
       }
-    });
+    } catch {
+      setIsSubmitting(false);
+      setTimeout(() => toast.error('An unexpected error occurred.'), 50);
+    }
   }
 
   return (
@@ -139,70 +150,66 @@ export default function DedRunForm({ onRunSubmitted }: Props) {
           </div>
         </div>
 
-        {/* Purchase toggle */}
-        <button
-          type="button"
-          onClick={() => setIsPurchased(!isPurchased)}
-          className={cn(
-            'flex items-center justify-between border-3 border-[var(--nb-border)] p-4 shadow-[3px_3px_0px_var(--nb-shadow)] transition-all duration-200 hover-press',
-            isPurchased ? 'bg-[var(--nb-amber)]' : 'bg-[var(--nb-surface)] hover:bg-[var(--nb-hover-bg)]'
-          )}
-        >
-          <div className="text-left">
-            <p className={cn('text-sm font-black uppercase', isPurchased ? 'text-black' : '')}>
-              {isPurchased ? t('form.purchased.on') : t('form.purchased.off')}
-            </p>
-            <p className={cn('text-xs font-medium', isPurchased ? 'text-black/50' : 'text-[var(--nb-text-muted)]')}>
-              {isPurchased ? t('form.purchased.on.sub') : t('form.purchased.off.sub')}
-            </p>
-          </div>
-          <div className={cn('nb-toggle', isPurchased && 'active')}>
-            <div className="nb-toggle-knob" />
-          </div>
-        </button>
-
-        {/* Capital cost */}
-        {isPurchased && (
-          <div className="animate-fade-up flex flex-col gap-1.5">
-            <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.capital')}</label>
-            <input
-              placeholder="e.g. 150m, 1.5b, 250.000.000"
-              value={capitalCostRaw}
-              onChange={(e) => {
-                let v = e.target.value;
-                // Only allow numbers, dots, commas, and a single suffix (m, b, k)
-                v = v.replace(/[^0-9.,mbk]/gi, '');
-                // Prevent consecutive dots or commas to avoid spam
-                v = v.replace(/([.,])([.,]+)/g, '$1');
-                
-                const suffixMatch = v.match(/[mbk]/gi);
-                if (suffixMatch && suffixMatch.length > 1) return;
-                
-                setCapitalCostRaw(v);
-              }}
-              onBlur={() => {
-                // When they finish typing, if it's purely a number (no m,b,k and no decimals), format it nicely
-                const v = capitalCostRaw;
-                if (!/[mbk.,]/i.test(v) && v.length > 0) {
-                  setCapitalCostRaw(new Intl.NumberFormat('de-DE').format(Number(v)));
-                }
-              }}
-              className="nb-input nb-focus"
-            />
-            {capitalCost > 0 && (
-              <p className="font-mono text-xs font-bold text-[var(--nb-text-muted)] animate-count-up">
-                ≈ {formatISKFull(capitalCost)} 
-                <span className="text-[var(--nb-text-faint)] font-sans font-medium ml-1">
-                  ({
-                    capitalCost >= 1_000_000_000 ? `${parseFloat((capitalCost / 1_000_000_000).toFixed(2))} ${locale === 'id' ? 'Miliar' : 'Billion'}` :
-                    capitalCost >= 1_000_000 ? `${parseFloat((capitalCost / 1_000_000).toFixed(2))} ${locale === 'id' ? 'Juta' : 'Million'}` :
-                    capitalCost >= 1_000 ? `${parseFloat((capitalCost / 1_000).toFixed(2))} ${locale === 'id' ? 'Ribu' : 'Thousand'}` : ''
-                  })
-                </span>
-              </p>
+        {/* Purchase toggle & Capital Cost Group */}
+        <div className="flex flex-col border-3 border-[var(--nb-border)] shadow-[3px_3px_0px_var(--nb-shadow)] bg-[var(--nb-surface)] transition-all">
+          <button
+            type="button"
+            onClick={() => setIsPurchased(!isPurchased)}
+            className={cn(
+              'flex items-center justify-between p-4 transition-all duration-200',
+              isPurchased ? 'bg-[var(--nb-amber)] hover:bg-[var(--nb-amber)]' : 'hover:bg-[var(--nb-hover-bg)]'
             )}
-          </div>
-        )}
+          >
+            <div className="text-left">
+              <p className={cn('text-sm font-black uppercase', isPurchased ? 'text-black' : '')}>
+                {isPurchased ? t('form.purchased.on') : t('form.purchased.off')}
+              </p>
+              <p className={cn('text-xs font-medium', isPurchased ? 'text-black/50' : 'text-[var(--nb-text-muted)]')}>
+                {isPurchased ? t('form.purchased.on.sub') : t('form.purchased.off.sub')}
+              </p>
+            </div>
+            <div className={cn('nb-toggle', isPurchased && 'active')}>
+              <div className="nb-toggle-knob" />
+            </div>
+          </button>
+
+          {isPurchased && (
+            <div className="animate-fade-down flex flex-col gap-1.5 p-4 border-t-3 border-[var(--nb-border)] bg-[var(--nb-surface)]">
+              <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.capital')}</label>
+              <input
+                placeholder="e.g. 150m, 1.5b, 250.000.000"
+                value={capitalCostRaw}
+                onChange={(e) => {
+                  let v = e.target.value;
+                  v = v.replace(/[^0-9.,mbk]/gi, '');
+                  v = v.replace(/([.,])([.,]+)/g, '$1');
+                  const suffixMatch = v.match(/[mbk]/gi);
+                  if (suffixMatch && suffixMatch.length > 1) return;
+                  setCapitalCostRaw(v);
+                }}
+                onBlur={() => {
+                  const v = capitalCostRaw;
+                  if (!/[mbk.,]/i.test(v) && v.length > 0) {
+                    setCapitalCostRaw(new Intl.NumberFormat('de-DE').format(Number(v)));
+                  }
+                }}
+                className="nb-input nb-focus"
+              />
+              {capitalCost > 0 && (
+                <p className="font-mono text-xs font-bold text-[var(--nb-text-muted)] animate-count-up">
+                  ≈ {formatISKFull(capitalCost)} 
+                  <span className="text-[var(--nb-text-faint)] font-sans font-medium ml-1">
+                    ({
+                      capitalCost >= 1_000_000_000 ? `${parseFloat((capitalCost / 1_000_000_000).toFixed(2))} ${locale === 'id' ? 'Miliar' : 'Billion'}` :
+                      capitalCost >= 1_000_000 ? `${parseFloat((capitalCost / 1_000_000).toFixed(2))} ${locale === 'id' ? 'Juta' : 'Million'}` :
+                      capitalCost >= 1_000 ? `${parseFloat((capitalCost / 1_000).toFixed(2))} ${locale === 'id' ? 'Ribu' : 'Thousand'}` : ''
+                    })
+                  </span>
+                </p>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Divider */}
         <div className="h-[3px] bg-[var(--nb-border)]" />
@@ -211,27 +218,68 @@ export default function DedRunForm({ onRunSubmitted }: Props) {
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.loot')}</label>
-            <div className="input-mode-tabs">
+            <div className="input-mode-tabs flex gap-2">
               <button
                 type="button"
-                onClick={() => { setLootInputMode('janice'); setManualLootRaw(''); }}
-                className={lootInputMode === 'janice' ? 'active' : ''}
+                disabled
+                className="opacity-50 cursor-not-allowed border-2 border-[var(--nb-border)] px-3 py-1 bg-[var(--nb-surface)]"
+                title="Janice API is currently in development"
               >
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 text-[var(--nb-text-muted)]">
                   <Search className="size-3" strokeWidth={2.5} />
-                  Janice
+                  <span className="line-through">Janice</span>
+                  <span className="text-[9px] text-red-500 font-bold ml-1 uppercase bg-red-100 dark:bg-red-900/30 px-1 border border-red-500">Incoming</span>
                 </span>
               </button>
               <button
                 type="button"
                 onClick={() => { setLootInputMode('manual'); setRawLootText(''); setLootValue(0); }}
-                className={lootInputMode === 'manual' ? 'active' : ''}
+                className={cn('border-2 border-[var(--nb-border)] px-3 py-1 transition-all', lootInputMode === 'manual' ? 'bg-[var(--nb-cyan)] text-black shadow-[2px_2px_0px_var(--nb-shadow)]' : 'bg-[var(--nb-surface)] hover:bg-[var(--nb-hover-bg)]')}
               >
                 <span className="flex items-center gap-1">
                   <Keyboard className="size-3" strokeWidth={2.5} />
                   {t('form.manual')}
                 </span>
               </button>
+            </div>
+          </div>
+          
+          {/* Shared Pricing Settings */}
+          <div className="grid grid-cols-3 gap-3 bg-[var(--nb-hover-bg)] p-3 border-2 border-[var(--nb-border)] shadow-[2px_2px_0px_var(--nb-shadow)]">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-[var(--nb-text-muted)]">Location</label>
+              <div className="border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] text-[var(--nb-text)] opacity-60 w-full font-mono text-xs font-bold p-2 cursor-not-allowed shadow-[2px_2px_0px_var(--nb-shadow)]">
+                Jita
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.price_mode')}</label>
+              <Select items={pricingModeItems} value={pricingMode} onValueChange={(v) => v && setPricingMode(v as PricingMode)}>
+                <SelectTrigger className="nb-select w-full font-mono text-xs font-bold !p-2 h-auto"><SelectValue /></SelectTrigger>
+                <SelectContent alignItemWithTrigger={false} side="bottom" className="border-3 border-[var(--nb-border)] rounded-none shadow-[4px_4px_0px_var(--nb-shadow)] bg-[var(--nb-surface)]">
+                  <SelectGroup>
+                    {PRICING_MODES.map((o) => <SelectItem key={o.value} value={o.value} className="font-mono text-xs font-bold rounded-none hover:bg-[var(--nb-amber)] transition-colors">{o.label}</SelectItem>)}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.percent')}</label>
+              <div className="flex items-center gap-1 bg-[var(--nb-surface)] border-2 border-[var(--nb-border)] px-2">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={pricingPercent}
+                  onChange={(e) => {
+                    const raw = e.target.value.replace(/\D/g, '');
+                    if (raw === '') { setPricingPercent(0); return; }
+                    setPricingPercent(Math.min(200, Math.max(0, Number(raw))));
+                  }}
+                  className="w-full text-center font-bold font-mono text-xs bg-transparent outline-none py-1.5"
+                />
+                <span className="text-[10px] font-black text-[var(--nb-text-muted)]">%</span>
+              </div>
             </div>
           </div>
 
@@ -256,64 +304,7 @@ export default function DedRunForm({ onRunSubmitted }: Props) {
                 </div>
               )}
 
-              {/* Pricing */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.price_mode')}</label>
-                  <Select items={pricingModeItems} value={pricingMode} onValueChange={(v) => v && setPricingMode(v as PricingMode)}>
-                    <SelectTrigger className="nb-select w-full font-mono text-sm font-bold"><SelectValue /></SelectTrigger>
-                    <SelectContent alignItemWithTrigger={false} side="bottom" className="border-3 border-[var(--nb-border)] rounded-none shadow-[4px_4px_0px_var(--nb-shadow)] animate-scale-in bg-[var(--nb-surface)]">
-                      <SelectGroup>
-                        {PRICING_MODES.map((o) => <SelectItem key={o.value} value={o.value} className="font-mono font-bold rounded-none hover:bg-[var(--nb-amber)] transition-colors">{o.label}</SelectItem>)}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">
-                    {t('form.percent')}
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      value={pricingPercent}
-                      onChange={(e) => {
-                        const raw = e.target.value.replace(/\D/g, '');
-                        if (raw === '') { setPricingPercent(0); return; }
-                        const v = Math.min(200, Math.max(0, Number(raw)));
-                        setPricingPercent(v);
-                      }}
-                      className="nb-input w-20 text-center font-bold !p-1.5 text-sm"
-                    />
-                    <span className="text-xs font-black text-[var(--nb-text-muted)]">%</span>
-                  </div>
-                  <input
-                    type="range" min={0} max={200} step={1}
-                    value={pricingPercent}
-                    onChange={(e) => setPricingPercent(Number(e.target.value))}
-                    className="nb-range"
-                  />
-                  <div className="flex gap-1.5 mt-1">
-                    {[90, 95, 100].map((p) => (
-                      <button
-                        key={p}
-                        type="button"
-                        onClick={() => setPricingPercent(p)}
-                        className={cn(
-                          'flex-1 py-1 text-[10px] font-black uppercase border-2 border-[var(--nb-border)] shadow-[2px_2px_0px_var(--nb-shadow)] transition-all cursor-pointer',
-                          pricingPercent === p
-                            ? 'bg-[var(--nb-cyan)] text-black'
-                            : 'bg-[var(--nb-surface)] text-[var(--nb-text-muted)] hover:bg-[var(--nb-hover-bg)]'
-                        )}
-                      >
-                        {p}%
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+
 
               {/* Janice button */}
               <button
@@ -394,13 +385,22 @@ export default function DedRunForm({ onRunSubmitted }: Props) {
           </div>
         )}
 
+        {formError && (
+          <div className="bg-red-100 dark:bg-red-900/30 border-2 border-red-500 p-2 text-center animate-shake">
+            <span className="text-red-600 dark:text-red-400 font-bold text-xs uppercase flex items-center justify-center gap-2">
+              <AlertTriangle className="size-4" />
+              {formError}
+            </span>
+          </div>
+        )}
+
         {/* Submit */}
         <button
           className="nb-btn nb-btn-primary w-full justify-center text-base py-3 hover-lift nb-focus group"
           onClick={handleSubmit}
-          disabled={isPending || lootValue === 0}
+          disabled={isSubmitting || lootValue === 0}
         >
-          {isPending ? (
+          {isSubmitting ? (
             <><span className="nb-spinner" /> {t('form.submitting')}</>
           ) : (
             <><Send className="size-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} /> {t('form.submit')}</>

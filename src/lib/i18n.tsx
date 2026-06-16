@@ -116,6 +116,9 @@ const dict = {
   'stat.total_runs.sub': { en: 'DED escalations completed', id: 'Eskalasi DED yang selesai' },
   'stat.avg_isk.sub': { en: 'Average profit per run', id: 'Rata-rata profit per run' },
   'stat.best_run.sub': { en: 'No runs recorded', id: 'Belum ada run' },
+  'stat.avg_isk_per_run': { en: 'AVG PROFIT / RUN', id: 'RATA-RATA PROFIT / RUN' },
+  'stat.avg_isk_per_run.sub': { en: 'Average net profit per run', id: 'Rata-rata keuntungan bersih per run' },
+  'stat.specific_avg': { en: 'Specific Averages', id: 'Rata-rata Spesifik' },
 
   /* ── Form ─────────────────────────────── */
   'form.title': { en: 'Log Escalation', id: 'Log Eskalasi' },
@@ -140,6 +143,7 @@ const dict = {
     en: 'Enter total loot value using shortcuts like 2.34b, 890m, or type the full number.',
     id: 'Masukkan total nilai loot pake shortcut kayak 2.34b, 890m, atau ketik angka lengkapnya.',
   },
+  'form.error.missing_selection': { en: 'Please select DED Level and Faction.', id: 'Pilih Level DED dan Faksi.' },
 
   /* ── History ──────────────────────────── */
   'history.title': { en: 'Sortie Ledger', id: 'Sortie Ledger' },

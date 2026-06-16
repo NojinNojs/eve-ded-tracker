@@ -3,8 +3,10 @@
  * ────────────────────────────────────────────────────────── */
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
-import type { DedRun, DedRunInsert, DashboardStats, Faction, DedType } from '@/lib/types';
+import type { DedRun, DedRunInsert, DashboardStats } from '@/lib/types';
+import { DED_TYPES, FACTIONS } from '@/lib/types';
 
 interface ActionResult {
   success: boolean;
@@ -24,11 +26,20 @@ async function getCharacterId(): Promise<string | null> {
 /**
  * Insert a new DED run record. Enforces auth on the server.
  */
+
 export async function submitDedRun(data: DedRunInsert): Promise<ActionResult> {
   const characterId = await getCharacterId();
   if (!characterId) {
     return { success: false, error: 'You must be logged in to submit a run.' };
   }
+
+  // Security Validation
+  const validDedTypes = DED_TYPES.map(d => d.value);
+  const validFactions = FACTIONS.map(f => f.value);
+  if (!validDedTypes.includes(data.ded_type)) return { success: false, error: 'Invalid DED Type.' };
+  if (!validFactions.includes(data.faction)) return { success: false, error: 'Invalid Faction.' };
+  if (data.capital_cost < 0 || data.capital_cost > 1e15) return { success: false, error: 'Invalid capital cost.' };
+  if (data.loot_value < 0 || data.loot_value > 1e15) return { success: false, error: 'Invalid loot value.' };
 
   const netProfit = data.loot_value - data.capital_cost;
 
@@ -49,6 +60,7 @@ export async function submitDedRun(data: DedRunInsert): Promise<ActionResult> {
     return { success: false, error: error.message };
   }
 
+  revalidatePath('/');
   return { success: true };
 }
 
@@ -79,43 +91,20 @@ export async function fetchDedRuns(): Promise<DedRun[]> {
  * Compute aggregated dashboard statistics from the user's runs.
  */
 export async function fetchDashboardStats(): Promise<DashboardStats> {
-  const runs = await fetchDedRuns();
-
-  const totalProfit = runs.reduce((sum, r) => sum + r.net_profit, 0);
-  const totalRuns = runs.length;
-
-  // Find the most profitable faction+dedType combo
-  const comboMap = new Map<string, { faction: Faction; dedType: DedType; profit: number }>();
-
-  for (const run of runs) {
-    const key = `${run.faction}|${run.ded_type}`;
-    const existing = comboMap.get(key);
-    if (existing) {
-      existing.profit += run.net_profit;
-    } else {
-      comboMap.set(key, {
-        faction: run.faction,
-        dedType: run.ded_type,
-        profit: run.net_profit,
-      });
-    }
+  const characterId = await getCharacterId();
+  if (!characterId) {
+    return { totalProfit: 0, totalRuns: 0, mostProfitable: null };
   }
 
-  let mostProfitable: DashboardStats['mostProfitable'] = null;
-  let maxProfit = -Infinity;
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc('get_dashboard_stats', { user_uuid: characterId });
 
-  for (const entry of comboMap.values()) {
-    if (entry.profit > maxProfit) {
-      maxProfit = entry.profit;
-      mostProfitable = entry;
-    }
+  if (error) {
+    console.error('fetchDashboardStats error:', error.message);
+    return { totalProfit: 0, totalRuns: 0, mostProfitable: null };
   }
 
-  return {
-    totalProfit,
-    totalRuns,
-    mostProfitable: totalRuns > 0 ? mostProfitable : null,
-  };
+  return data as DashboardStats;
 }
 
 /**
@@ -138,5 +127,6 @@ export async function deleteDedRun(runId: string): Promise<ActionResult> {
     return { success: false, error: error.message };
   }
 
+  revalidatePath('/');
   return { success: true };
 }

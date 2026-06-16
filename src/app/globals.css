@@ -138,7 +138,7 @@
   --sidebar-ring: #22d3ee;
 
   --nb-surface: #161620;
-  --nb-border: #3a3a4e;
+  --nb-border: #4f4f66;
   --nb-text: #e8e6e3;
   --nb-text-muted: #9ca3af;
   --nb-text-faint: #6b7280;
@@ -194,10 +194,10 @@ body {
 }
 
 /* ─── Stat card color variants ──────── */
-.nb-stat-cyan  { background: var(--nb-stat-cyan) !important; }
-.nb-stat-lime  { background: var(--nb-stat-lime) !important; }
-.nb-stat-amber { background: var(--nb-stat-amber) !important; }
-.nb-stat-pink  { background: var(--nb-stat-pink) !important; }
+.nb-stat-cyan  { background: var(--nb-stat-cyan) !important; color: #1a1a1a !important; }
+.nb-stat-lime  { background: var(--nb-stat-lime) !important; color: #1a1a1a !important; }
+.nb-stat-amber { background: var(--nb-stat-amber) !important; color: #1a1a1a !important; }
+.nb-stat-pink  { background: var(--nb-stat-pink) !important; color: #1a1a1a !important; }
 
 /* ─── Neobrutal button ──────────────── */
 .nb-btn {
@@ -219,9 +219,13 @@ body {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0px var(--nb-shadow);
 }
-.nb-btn:active {
+.nb-btn:active:not(:disabled) {
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0px var(--nb-shadow);
+}
+.nb-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 .nb-btn-primary {
   background: var(--nb-cyan);
@@ -292,6 +296,8 @@ body {
 /* ─── Profit / Loss ─────────────────── */
 .text-profit { color: #16a34a; font-weight: 800; }
 .text-loss   { color: #dc2626; font-weight: 800; }
+.dark .text-profit { color: #4ade80; }
+.dark .text-loss   { color: #f87171; }
 
 /* ─── Neobrutal toggle ──────────────── */
 .nb-toggle {
