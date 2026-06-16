@@ -123,7 +123,9 @@ const dict = {
   /* ── Form ─────────────────────────────── */
   'form.title': { en: 'Log Escalation', id: 'Log Eskalasi' },
   'form.ded_level': { en: 'DED Level', id: 'Level DED' },
+  'form.ded_level.placeholder': { en: 'Select level', id: 'Pilih level' },
   'form.faction': { en: 'Faction', id: 'Faksi' },
+  'form.faction.placeholder': { en: 'Select faction', id: 'Pilih faksi' },
   'form.purchased.on': { en: '💰 Purchased Escalation', id: '💰 Eskalasi Dibeli' },
   'form.purchased.off': { en: '🎲 Free Escalation', id: '🎲 Eskalasi Gratis' },
   'form.purchased.on.sub': { en: 'Bought from contract/market', id: 'Dibeli dari kontrak/market' },

@@ -21,19 +21,6 @@ import { cn } from '@/lib/utils';
 
 type LootInputMode = 'janice' | 'manual';
 
-const dedTypeItems = [
-  { label: 'Select level', value: null },
-  ...DED_TYPES.map((d) => ({ label: d.label, value: d.value })),
-];
-const factionItems = [
-  { label: 'Select faction', value: null },
-  ...FACTIONS.map((f) => ({ label: f.label, value: f.value })),
-];
-const pricingModeItems = [
-  { label: 'Mode', value: null },
-  ...PRICING_MODES.map((p) => ({ label: p.label, value: p.value })),
-];
-
 export default function DedRunForm() {
   const { t, locale } = useI18n();
   const [dedType, setDedType] = useState<DedType | null>(null);
@@ -127,9 +114,9 @@ export default function DedRunForm() {
         {/* DED + Faction */}
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.ded_level')}</label>
-            <Select items={dedTypeItems} value={dedType} onValueChange={(v) => v && setDedType(v as DedType)}>
-              <SelectTrigger className="nb-select w-full font-mono text-sm font-bold"><SelectValue /></SelectTrigger>
+            <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.ded_level') ?? 'DED Level'}</label>
+            <Select value={dedType ?? ''} onValueChange={(v) => v && setDedType(v as DedType)}>
+              <SelectTrigger className="nb-select w-full font-mono text-sm font-bold"><SelectValue placeholder={t('form.ded_level.placeholder') ?? 'Select level'} /></SelectTrigger>
               <SelectContent alignItemWithTrigger={false} side="bottom" className="border-3 border-[var(--nb-border)] rounded-none shadow-[4px_4px_0px_var(--nb-shadow)] animate-scale-in bg-[var(--nb-surface)]">
                 <SelectGroup>
                   {DED_TYPES.map((o) => <SelectItem key={o.value} value={o.value} className="font-mono font-bold rounded-none hover:bg-[var(--nb-amber)] transition-colors">{o.label}</SelectItem>)}
@@ -138,9 +125,9 @@ export default function DedRunForm() {
             </Select>
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.faction')}</label>
-            <Select items={factionItems} value={faction} onValueChange={(v) => v && setFaction(v as Faction)}>
-              <SelectTrigger className="nb-select w-full font-mono text-sm font-bold"><SelectValue /></SelectTrigger>
+            <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.faction') ?? 'Faction'}</label>
+            <Select value={faction ?? ''} onValueChange={(v) => v && setFaction(v as Faction)}>
+              <SelectTrigger className="nb-select w-full font-mono text-sm font-bold"><SelectValue placeholder={t('form.faction.placeholder') ?? 'Select faction'} /></SelectTrigger>
               <SelectContent alignItemWithTrigger={false} side="bottom" className="border-3 border-[var(--nb-border)] rounded-none shadow-[4px_4px_0px_var(--nb-shadow)] animate-scale-in bg-[var(--nb-surface)]">
                 <SelectGroup>
                   {FACTIONS.map((o) => <SelectItem key={o.value} value={o.value} className="font-mono font-bold rounded-none hover:bg-[var(--nb-amber)] transition-colors">{o.label}</SelectItem>)}
@@ -254,7 +241,7 @@ export default function DedRunForm() {
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.price_mode')}</label>
-              <Select items={pricingModeItems} value={pricingMode} onValueChange={(v) => v && setPricingMode(v as PricingMode)}>
+              <Select value={pricingMode} onValueChange={(v) => v && setPricingMode(v as PricingMode)}>
                 <SelectTrigger className="nb-select w-full font-mono text-xs font-bold !p-2 h-auto"><SelectValue /></SelectTrigger>
                 <SelectContent alignItemWithTrigger={false} side="bottom" className="border-3 border-[var(--nb-border)] rounded-none shadow-[4px_4px_0px_var(--nb-shadow)] bg-[var(--nb-surface)]">
                   <SelectGroup>

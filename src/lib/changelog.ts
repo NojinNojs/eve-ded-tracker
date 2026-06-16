@@ -8,6 +8,19 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.2.1',
+    date: '2026-06-16',
+    title: 'Faction Logging Fixes & UI Polish',
+    features: [
+      'Fixed an issue where some DED run logs were failing to save for certain factions.',
+      'Improved the dropdown menus for DED Level and Faction to be more intuitive.',
+      'General under-the-hood stability improvements for a smoother tracking experience.'
+    ],
+    fixes: [
+      'Resolved a critical bug preventing the submission of non-Guristas DED runs.'
+    ]
+  },
+  {
     version: 'v1.2.0',
     date: '2026-06-16',
     title: 'Production Readiness & Security Audit',
