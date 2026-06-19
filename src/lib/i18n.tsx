@@ -67,7 +67,7 @@ const dict = {
     id: '↑ Klik row mana aja buat liat detail. Data lu bakal kayak gini setelah login.',
   },
   'demo.badge': { en: 'SAMPLE DATA', id: 'DATA SAMPEL' },
-  'demo.ledger': { en: 'Sortie Ledger (Demo)', id: 'Sortie Ledger (Demo)' },
+  'demo.ledger': { en: 'Run History (Demo)', id: 'Riwayat Run (Demo)' },
 
   /* ── Selling Points ──────────────────── */
   'sell.kicker': { en: 'Why DED Tracker?', id: 'Kenapa DED Tracker?' },
@@ -119,6 +119,11 @@ const dict = {
   'stat.avg_isk_per_run': { en: 'AVG PROFIT / RUN', id: 'RATA-RATA PROFIT / RUN' },
   'stat.avg_isk_per_run.sub': { en: 'Average net profit per run', id: 'Rata-rata keuntungan bersih per run' },
   'stat.specific_avg': { en: 'Specific Averages', id: 'Rata-rata Spesifik' },
+  'stat.range.today': { en: 'Today', id: 'Hari ini' },
+  'stat.range.3d': { en: '3d', id: '3h' },
+  'stat.range.1w': { en: '1w', id: '1m' },
+  'stat.range.1m': { en: '1m', id: '1b' },
+  'stat.range.all': { en: 'All time', id: 'Semua' },
 
   /* ── Form ─────────────────────────────── */
   'form.title': { en: 'Log Escalation', id: 'Log Eskalasi' },
@@ -148,7 +153,7 @@ const dict = {
   'form.error.missing_selection': { en: 'Please select DED Level and Faction.', id: 'Pilih Level DED dan Faksi.' },
 
   /* ── History ──────────────────────────── */
-  'history.title': { en: 'Sortie Ledger', id: 'Sortie Ledger' },
+  'history.title': { en: 'Run History', id: 'Riwayat Run' },
   'history.runs': { en: 'runs', id: 'run' },
   'history.run': { en: 'run', id: 'run' },
   'history.empty.title': { en: 'No runs yet', id: 'Belum ada run' },
@@ -174,6 +179,18 @@ const dict = {
   'loot_value': { en: 'Loot Value', id: 'Nilai Loot' },
   'capital_cost': { en: 'Capital Cost', id: 'Modal' },
   'net_pnl': { en: 'Net PNL', id: 'PNL Bersih' },
+  
+  /* ── Footer ─────────────────────────────── */
+  'footer.sub': { en: 'PVE Analytics for Capsuleers', id: 'Analitik PVE untuk Capsuleer' },
+  'footer.desc': { 
+    en: 'Maximize your ISK/hour with data-driven DED escalation tracking. Evaluated instantly via the Janice Appraiser.',
+    id: 'Maksimalkan ISK/jam lu pake data eskalasi DED yang akurat. Harga dihitung otomatis via Janice Appraiser.'
+  },
+  'footer.support': { en: 'Support', id: 'Dukungan' },
+  'footer.isk': { en: 'ISK Donation', id: 'Donasi ISK' },
+  'footer.mail': { en: 'In-game Mail / Feedback', id: 'Mail In-game / Feedback' },
+  'footer.prefs': { en: 'Preferences', id: 'Preferensi' },
+  'footer.powered': { en: 'Powered by Janice', id: 'Ditenagai oleh Janice' },
 } as const;
 
 export type TranslationKey = keyof typeof dict;

@@ -167,7 +167,7 @@ export default function RunHistory({ runs }: Props) {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-black uppercase tracking-wider bg-[var(--nb-border)] text-[var(--nb-surface)] px-1.5 py-0.5">{run.ded_type}</span>
+                      <span className="text-[11px] font-black uppercase tracking-wider bg-[var(--nb-text)] text-[var(--nb-surface)] px-1.5 py-0.5">{run.ded_type}</span>
                       <span className={cn(
                         'text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 border-2 border-[var(--nb-border)]',
                         run.is_purchased ? 'bg-[var(--nb-amber)] text-black' : 'bg-[var(--nb-lime)] text-black'

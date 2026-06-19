@@ -102,37 +102,45 @@ export async function GET(request: Request) {
     });
 
     if (signInError) {
-      // User doesn't exist yet → sign up
-      const { error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            character_id: character.CharacterID,
-            character_name: character.CharacterName,
-            full_name: character.CharacterName,
-            character_owner_hash: character.CharacterOwnerHash,
+      if (signInError.message.includes('Invalid login credentials')) {
+        // User doesn't exist yet → sign up
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              character_id: character.CharacterID,
+              character_name: character.CharacterName,
+              full_name: character.CharacterName,
+              character_owner_hash: character.CharacterOwnerHash,
+            },
           },
-        },
-      });
+        });
 
-      if (signUpError) {
-        console.error('Supabase sign-up error:', signUpError.message);
+        if (signUpError) {
+          console.error('Supabase sign-up error:', signUpError.message);
+          return NextResponse.redirect(
+            `${origin}?error=${encodeURIComponent(signUpError.message)}`
+          );
+        }
+
+        // Auto-confirm: sign in immediately after signup
+        const { error: postSignInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (postSignInError) {
+          console.error('Post-signup sign-in error:', postSignInError.message);
+          return NextResponse.redirect(
+            `${origin}?error=${encodeURIComponent('Sign-in after registration failed.')}`
+          );
+        }
+      } else {
+        // This is a network error (like ENOTFOUND) or rate limit, etc.
+        console.error('Supabase sign-in error:', signInError);
         return NextResponse.redirect(
-          `${origin}?error=${encodeURIComponent(signUpError.message)}`
-        );
-      }
-
-      // Auto-confirm: sign in immediately after signup
-      const { error: postSignInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (postSignInError) {
-        console.error('Post-signup sign-in error:', postSignInError.message);
-        return NextResponse.redirect(
-          `${origin}?error=${encodeURIComponent('Sign-in after registration failed. Please try logging in again.')}`
+          `${origin}?error=${encodeURIComponent('Database connection error. If using local Supabase, ensure it is running.')}`
         );
       }
     }
@@ -147,10 +155,18 @@ export async function GET(request: Request) {
 
     // Success → redirect to dashboard
     return NextResponse.redirect(origin);
-  } catch (err) {
+  } catch (err: any) {
     console.error('EVE SSO callback error:', err);
+    let errorMsg = 'Authentication failed';
+    
+    if (err.message && err.message.includes('fetch failed')) {
+      errorMsg = 'Failed to connect to EVE SSO servers. Please check your internet connection or DNS.';
+    } else if (err.message) {
+      errorMsg = err.message;
+    }
+
     return NextResponse.redirect(
-      `${origin}?error=${encodeURIComponent('Authentication failed')}`
+      `${origin}?error=${encodeURIComponent(errorMsg)}`
     );
   }
 }

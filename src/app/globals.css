@@ -402,7 +402,7 @@ body {
   cursor: pointer; border: none; position: relative;
 }
 .lang-switch button + button { border-left: 2px solid var(--nb-border); }
-.lang-switch button.active { background: var(--nb-text); color: var(--nb-cyan); }
+.lang-switch button.active { background: var(--nb-cyan); color: #1a1a1a; }
 .lang-switch button:not(.active) { background: var(--nb-surface); color: var(--nb-text-muted); }
 .lang-switch button:not(.active):hover { background: var(--nb-hover-bg); color: var(--nb-text); }
 
@@ -528,6 +528,25 @@ body {
 [data-sonner-toaster] [data-sonner-toast] [data-close-button] {
   border: 2px solid currentColor !important;
   border-radius: 0 !important;
+}
+
+/* ─── Stats cards mobile scroll ───── */
+.stats-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+.stats-scroll::-webkit-scrollbar { display: none; }
+.stats-scroll > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  min-width: 200px;
+  width: 72vw;
+  max-width: 280px;
 }
 
 @layer base {

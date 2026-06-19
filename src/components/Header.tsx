@@ -3,8 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { LogOut, ChevronDown, Globe } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
+import { LogOut, ChevronDown, LogIn } from 'lucide-react';
 import Logo from '@/components/Logo';
 import type { User } from '@supabase/supabase-js';
 import { useI18n } from '@/lib/i18n';
@@ -39,44 +38,20 @@ export default function Header() {
 
   return (
     <header className="nb-nav sticky top-0 z-50 animate-fade-down">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-8 py-3">
 
         {/* Brand */}
-        <a href="/" className="group flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <div className="flex size-10 items-center justify-center border-3 border-[var(--nb-border)] bg-[var(--nb-cyan)] shadow-[3px_3px_0px_var(--nb-shadow)] transition-transform group-hover:rotate-12">
-            <Logo className="size-6 text-black" />
+        <a href="/" className="group flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">
+          <div className="flex size-8 sm:size-10 shrink-0 items-center justify-center border-2 sm:border-3 border-[var(--nb-border)] bg-[var(--nb-cyan)] shadow-[2px_2px_0px_var(--nb-shadow)] sm:shadow-[3px_3px_0px_var(--nb-shadow)] transition-transform group-hover:rotate-12">
+            <Logo className="size-5 sm:size-6 text-black" />
           </div>
-          <span className="text-xl font-black uppercase tracking-tight">
+          <span className="text-base sm:text-xl font-black uppercase tracking-tight whitespace-nowrap">
             {t('nav.brand')}
           </span>
         </a>
 
         {/* Right side */}
-        <div className="flex items-center gap-3">
-          {/* Language switcher */}
-          <div className="flex items-center gap-1.5">
-            <Globe className="size-4 text-[var(--nb-text-faint)] hidden sm:block" strokeWidth={2} />
-            <div className="lang-switch" role="group" aria-label="Language">
-              <button
-                onClick={() => setLocale('en')}
-                className={locale === 'en' ? 'active' : ''}
-                aria-pressed={locale === 'en'}
-              >
-                EN
-              </button>
-              <button
-                onClick={() => setLocale('id')}
-                className={locale === 'id' ? 'active' : ''}
-                aria-pressed={locale === 'id'}
-              >
-                ID
-              </button>
-            </div>
-          </div>
-
-          {/* Theme toggle */}
-          <ThemeToggle />
-
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Auth */}
           {loading ? (
             <Skeleton className="h-10 w-28 border-3 border-[var(--nb-border)]" />
@@ -115,8 +90,10 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <a href="/auth/login" className="nb-btn nb-btn-primary nb-focus">
-              {t('nav.signin')}
+            <a href="/auth/login" className="nb-btn nb-btn-primary nb-focus flex items-center gap-2">
+              <LogIn className="size-4" strokeWidth={3} />
+              <span className="hidden sm:inline">EVE LOGIN</span>
+              <span className="sm:hidden">LOGIN</span>
             </a>
           )}
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Send, Search, TrendingUp, TrendingDown, Package, Keyboard, AlertTriangle, ExternalLink
 } from 'lucide-react';
@@ -33,7 +34,7 @@ export default function DedRunForm() {
   const [pricingPercent, setPricingPercent] = useState(100);
   const [janiceLoading, setJaniceLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [lootInputMode, setLootInputMode] = useState<LootInputMode>('manual');
+  const [lootInputMode, setLootInputMode] = useState<LootInputMode>('janice');
   const [manualLootRaw, setManualLootRaw] = useState('');
   const [janiceResult, setJaniceResult] = useState<JaniceResult | null>(null);
   const [janiceCode, setJaniceCode] = useState<string | null>(null);
@@ -110,7 +111,12 @@ export default function DedRunForm() {
   }
 
   return (
-    <div className="nb-card p-5 sm:p-6 animate-slide-left">
+    <motion.div 
+      initial={{ opacity: 0, x: -40 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'spring', bounce: 0.4, duration: 0.6 }}
+      className="nb-card p-5 sm:p-6"
+    >
       {/* Title */}
       <div className="flex items-center gap-3 mb-6">
         <div className="flex size-10 items-center justify-center border-3 border-[var(--nb-border)] bg-[var(--nb-cyan)] shadow-[2px_2px_0px_var(--nb-shadow)] transition-transform hover:rotate-12">
@@ -169,9 +175,17 @@ export default function DedRunForm() {
             </div>
           </button>
 
-          {isPurchased && (
-            <div className="animate-fade-down flex flex-col gap-1.5 p-4 border-t-3 border-[var(--nb-border)] bg-[var(--nb-surface)]">
-              <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.capital')}</label>
+          {/* Purchase toggle & Capital Cost Group */}
+          <AnimatePresence>
+            {isPurchased && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="flex flex-col gap-1.5 p-4 border-t-3 border-[var(--nb-border)] bg-[var(--nb-surface)]">
+                  <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.capital')}</label>
               <input
                 placeholder="e.g. 150m, 1.5b, 250.000.000"
                 value={capitalCostRaw}
@@ -204,7 +218,9 @@ export default function DedRunForm() {
                 </p>
               )}
             </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Divider */}
@@ -214,26 +230,32 @@ export default function DedRunForm() {
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <label className="text-xs font-black uppercase tracking-wider text-[var(--nb-text-muted)]">{t('form.loot')}</label>
-            <div className="input-mode-tabs flex gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => { setLootInputMode('janice'); setManualLootRaw(''); setLootValue(0); setJaniceResult(null); setJaniceCode(null); }}
-                className={cn('border-2 border-[var(--nb-border)] px-3 py-1 transition-all', lootInputMode === 'janice' ? 'bg-[var(--nb-cyan)] text-black shadow-[2px_2px_0px_var(--nb-shadow)]' : 'bg-[var(--nb-surface)] hover:bg-[var(--nb-hover-bg)]')}
+                className={cn(
+                  'flex items-center justify-center gap-2 border-3 border-[var(--nb-border)] px-4 py-3 font-black uppercase tracking-wider transition-all',
+                  lootInputMode === 'janice'
+                    ? 'bg-[var(--nb-cyan)] text-black translate-y-[2px] translate-x-[2px] shadow-none'
+                    : 'bg-[var(--nb-surface)] text-[var(--nb-text-muted)] shadow-[3px_3px_0px_var(--nb-shadow)] hover:-translate-y-1 hover:shadow-[4px_4px_0px_var(--nb-shadow)] hover:text-[var(--nb-text)]'
+                )}
               >
-                <span className="flex items-center gap-1">
-                  <Search className="size-3" strokeWidth={2.5} />
-                  Janice
-                </span>
+                <Search className="size-4" strokeWidth={2.5} />
+                Janice
               </button>
               <button
                 type="button"
                 onClick={() => { setLootInputMode('manual'); setRawLootText(''); setLootValue(0); setJaniceResult(null); setJaniceCode(null); }}
-                className={cn('border-2 border-[var(--nb-border)] px-3 py-1 transition-all', lootInputMode === 'manual' ? 'bg-[var(--nb-cyan)] text-black shadow-[2px_2px_0px_var(--nb-shadow)]' : 'bg-[var(--nb-surface)] hover:bg-[var(--nb-hover-bg)]')}
+                className={cn(
+                  'flex items-center justify-center gap-2 border-3 border-[var(--nb-border)] px-4 py-3 font-black uppercase tracking-wider transition-all',
+                  lootInputMode === 'manual'
+                    ? 'bg-[var(--nb-pink)] text-black translate-y-[2px] translate-x-[2px] shadow-none'
+                    : 'bg-[var(--nb-surface)] text-[var(--nb-text-muted)] shadow-[3px_3px_0px_var(--nb-shadow)] hover:-translate-y-1 hover:shadow-[4px_4px_0px_var(--nb-shadow)] hover:text-[var(--nb-text)]'
+                )}
               >
-                <span className="flex items-center gap-1">
-                  <Keyboard className="size-3" strokeWidth={2.5} />
-                  {t('form.manual')}
-                </span>
+                <Keyboard className="size-4" strokeWidth={2.5} />
+                {t('form.manual')}
               </button>
             </div>
           </div>
@@ -314,9 +336,15 @@ export default function DedRunForm() {
               </button>
 
               {/* Janice item breakdown */}
-              {janiceResult && janiceResult.items.length > 0 && (
-                <div className="border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[3px_3px_0px_var(--nb-shadow)] animate-scale-in">
-                  <div className="flex items-center justify-between border-b-3 border-[var(--nb-border)] bg-[var(--nb-hover-bg)] px-3 py-2">
+              <AnimatePresence>
+                {janiceResult && janiceResult.items.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                    className="border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[3px_3px_0px_var(--nb-shadow)]"
+                  >
+                    <div className="flex items-center justify-between border-b-3 border-[var(--nb-border)] bg-[var(--nb-hover-bg)] px-3 py-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-[var(--nb-text-muted)]">
                       Item Breakdown ({janiceResult.items.length} items)
                     </span>
@@ -348,8 +376,9 @@ export default function DedRunForm() {
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
+                </motion.div>
+                )}
+              </AnimatePresence>
             </>
           ) : (
             /* Manual ISK input */
@@ -399,11 +428,18 @@ export default function DedRunForm() {
         )}
 
         {/* Net PNL preview */}
-        {lootValue > 0 && (
-          <div className={cn(
-            'animate-scale-in flex items-center justify-between border-3 border-[var(--nb-border)] p-4 shadow-[3px_3px_0px_var(--nb-shadow)] transition-colors',
-            netProfit >= 0 ? 'bg-[var(--nb-lime)]' : 'bg-[var(--nb-red)]'
-          )}>
+        <AnimatePresence>
+          {lootValue > 0 && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", bounce: 0.5 }}
+              className={cn(
+                'flex items-center justify-between border-3 border-[var(--nb-border)] p-4 shadow-[3px_3px_0px_var(--nb-shadow)] transition-colors',
+                netProfit >= 0 ? 'bg-[var(--nb-lime)]' : 'bg-[var(--nb-red)]'
+              )}
+            >
             <div className="flex items-center gap-2">
               {netProfit >= 0
                 ? <TrendingUp className="size-5 text-black animate-bounce-subtle" strokeWidth={2.5} />
@@ -414,8 +450,9 @@ export default function DedRunForm() {
             <span className="font-mono text-xl font-black text-black">
               {netProfit >= 0 ? '+' : ''}{formatISKFull(netProfit)}
             </span>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {formError && (
           <div className="bg-red-100 dark:bg-red-900/30 border-2 border-red-500 p-2 text-center animate-shake">
@@ -439,6 +476,6 @@ export default function DedRunForm() {
           )}
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -8,6 +8,24 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.4.0',
+    date: '2026-06-19',
+    title: 'UI/UX Overhaul & Auth Stability',
+    features: [
+      'Complete redesign of the application Footer with more informative layout and CCP trademark disclaimer',
+      'Improved navigation bar layout with condensed SSO login button',
+      'Enhanced error toast notification system for better UX on authentication failures',
+      'Added full English and Indonesian translation support for new Footer and History views',
+    ],
+    fixes: [
+      'Fixed double-login bug caused by ENOTFOUND network errors improperly triggering signups',
+      'Fixed poor text contrast on language and timeframe switcher buttons during Dark Mode',
+      'Fixed "ilang ilangan" bug where Landing Page animated items would disappear when changing languages',
+      'Fixed "Best Run" calculation in Stats Dashboard to correctly prioritize the most recent run on tied profits',
+      'Removed unused default Next.js SVG assets to clean up the public directory',
+    ]
+  },
+  {
     version: 'v1.3.0',
     date: '2026-06-16',
     title: 'Janice API v2 Integration',
