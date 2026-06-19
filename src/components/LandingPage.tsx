@@ -388,9 +388,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ──────────────────────────── */}
-      <section className="relative w-full border-t-4 border-[var(--nb-border)] bg-[#0f0f14] py-20 sm:py-32 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+      <section className="relative w-full border-y-4 border-[var(--nb-border)] bg-[var(--nb-surface)] dark:bg-[#0f0f14] py-20 sm:py-32 overflow-hidden">
+        {/* Background Patterns */}
+        <div className="absolute inset-0 opacity-10 dark:hidden" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+        <div className="absolute inset-0 opacity-[0.05] hidden dark:block" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
         
         <motion.div 
           className="relative mx-auto max-w-4xl px-5 text-center z-10"
@@ -399,21 +400,31 @@ export default function LandingPage() {
           viewport={{ once: true, margin: "-50px" }}
           variants={staggerContainer}
         >
-          <motion.h2 variants={fadeInUp} className="text-4xl font-[900] uppercase tracking-tighter text-white sm:text-6xl md:text-7xl">
+          <motion.h2 variants={fadeInUp} className="text-4xl font-[900] uppercase tracking-tighter text-[var(--nb-text)] dark:text-white sm:text-6xl md:text-7xl">
             {t('cta.title.1')}
             <br />
-            <span className="text-[var(--nb-cyan)]" style={{ WebkitTextStroke: '1px var(--nb-cyan)' }}>{t('cta.title.2')}</span>
+            {/* Light Mode Cyan Text with bold black stroke */}
+            <span className="text-[var(--nb-cyan)] drop-shadow-[4px_4px_0px_var(--nb-shadow)] dark:hidden" style={{ WebkitTextStroke: '2px black' }}>
+              {t('cta.title.2')}
+            </span>
+            {/* Dark Mode Cyan Text */}
+            <span className="text-[var(--nb-cyan)] hidden dark:inline" style={{ WebkitTextStroke: '1px var(--nb-cyan)' }}>
+              {t('cta.title.2')}
+            </span>
           </motion.h2>
-          <motion.p variants={fadeInUp} className="mt-8 text-lg sm:text-xl font-medium text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          
+          <motion.p variants={fadeInUp} className="mt-8 text-lg sm:text-xl font-bold text-[var(--nb-text-muted)] dark:text-gray-400 dark:font-medium max-w-2xl mx-auto leading-relaxed">
             {t('cta.sub')}
           </motion.p>
+          
           <motion.div variants={fadeInUp} className="mt-12 flex flex-col items-center gap-5 sm:flex-row sm:justify-center">
-            <a href="/auth/login" className="flex items-center gap-3 border-4 border-black bg-[var(--nb-cyan)] px-10 py-5 font-black uppercase tracking-widest text-black shadow-[8px_8px_0px_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(255,255,255,0.1)] active:translate-y-0 active:shadow-none text-xl">
-              <Logo className="size-7 text-black" />
+            <a href="/auth/login" className="group flex items-center gap-3 border-4 border-[var(--nb-border)] dark:border-black bg-[var(--nb-cyan)] px-10 py-5 font-black uppercase tracking-widest text-[var(--nb-text)] dark:text-black shadow-[8px_8px_0px_var(--nb-shadow)] dark:shadow-[8px_8px_0px_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-2 hover:shadow-[12px_12px_0px_var(--nb-shadow)] dark:hover:shadow-[12px_12px_0px_rgba(255,255,255,0.1)] active:translate-y-0 active:shadow-none text-xl">
+              <Logo className="size-7 text-[var(--nb-text)] dark:text-black transition-transform group-hover:rotate-12 group-active:-rotate-12" />
               {t('cta.btn')}
             </a>
           </motion.div>
-          <motion.p variants={fadeInUp} className="mt-12 font-mono text-xs font-black uppercase tracking-[0.3em] text-gray-600 select-none">
+          
+          <motion.p variants={fadeInUp} className="mt-12 font-mono text-xs font-black uppercase tracking-[0.3em] text-[var(--nb-text-faint)] dark:text-gray-600 select-none">
             {t('cta.footer')}
           </motion.p>
         </motion.div>

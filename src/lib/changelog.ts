@@ -8,6 +8,25 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.4.3',
+    date: '2026-06-19',
+    title: 'Clean CTA Design',
+    features: [],
+    fixes: [
+      'Refined the Light Mode CTA section to remove excessive decorative shapes, opting for a cleaner, high-contrast Neo-Brutalist typography look',
+    ]
+  },
+  {
+    version: 'v1.4.2',
+    date: '2026-06-19',
+    title: 'Light Mode Adaptability',
+    features: [],
+    fixes: [
+      'Fixed the bottom CTA section to correctly adapt to light mode instead of using hardcoded dark colors',
+      'Fixed the bottom CTA button shadow visibility in light mode by using theme variables instead of white rgba',
+    ]
+  },
+  {
     version: 'v1.4.1',
     date: '2026-06-19',
     title: 'Visual Consistency',
