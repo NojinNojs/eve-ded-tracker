@@ -8,6 +8,17 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.4.4',
+    date: '2026-06-19',
+    title: 'Data Reliability & Security Hotfix',
+    features: [],
+    fixes: [
+      'Eliminated Supabase RPC dependency for Dashboard stats calculation to prevent missing data bugs due to database schema caching issues.',
+      'Upgraded data aggregation security to strictly enforce server-side authenticated sessions.',
+      'Removed unused migration files.'
+    ]
+  },
+  {
     version: 'v1.4.3',
     date: '2026-06-19',
     title: 'Clean CTA Design',

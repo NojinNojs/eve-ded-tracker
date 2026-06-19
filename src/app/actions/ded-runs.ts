@@ -108,14 +108,34 @@ export async function fetchDashboardStats(): Promise<DashboardStats> {
   }
 
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc('get_dashboard_stats', { user_uuid: characterId });
+  const { data, error } = await supabase
+    .from('ded_runs')
+    .select('faction, ded_type, net_profit')
+    .eq('character_id', characterId);
 
-  if (error) {
-    console.error('fetchDashboardStats error:', error.message);
+  if (error || !data) {
+    if (error) console.error('fetchDashboardStats error:', error.message);
     return { totalProfit: 0, totalRuns: 0, mostProfitable: null };
   }
 
-  return data as DashboardStats;
+  const totalRuns = data.length;
+  const totalProfit = data.reduce((sum, run) => sum + Number(run.net_profit), 0);
+
+  const group = data.reduce((acc, run) => {
+    const key = `${run.faction}|${run.ded_type}`;
+    if (!acc[key]) acc[key] = { faction: run.faction as any, dedType: run.ded_type as any, profit: 0 };
+    acc[key].profit += Number(run.net_profit);
+    return acc;
+  }, {} as Record<string, { faction: import('@/lib/types').Faction; dedType: import('@/lib/types').DedType; profit: number }>);
+
+  let mostProfitable = null;
+  for (const key in group) {
+    if (!mostProfitable || group[key].profit > mostProfitable.profit) {
+      mostProfitable = group[key];
+    }
+  }
+
+  return { totalRuns, totalProfit, mostProfitable };
 }
 
 /**
