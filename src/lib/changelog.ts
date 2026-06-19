@@ -8,6 +8,15 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.4.1',
+    date: '2026-06-19',
+    title: 'Visual Consistency',
+    features: [],
+    fixes: [
+      'Updated Landing Page CTA buttons to use cyan instead of lime green to match the primary branding concept',
+    ]
+  },
+  {
     version: 'v1.4.0',
     date: '2026-06-19',
     title: 'UI/UX Overhaul & Auth Stability',

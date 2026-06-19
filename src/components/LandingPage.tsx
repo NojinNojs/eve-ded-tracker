@@ -119,7 +119,7 @@ export default function LandingPage() {
           </motion.p>
 
           <motion.div variants={fadeInUp} className="mt-12 flex flex-col items-center gap-5 sm:flex-row">
-            <a href="/auth/login" className="flex items-center gap-3 border-4 border-[var(--nb-border)] bg-[var(--nb-lime)] px-8 py-4 font-black uppercase tracking-widest text-black shadow-[6px_6px_0px_var(--nb-shadow)] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_var(--nb-shadow)] active:translate-y-1 active:shadow-[0px_0px_0px_var(--nb-shadow)] text-lg">
+            <a href="/auth/login" className="flex items-center gap-3 border-4 border-[var(--nb-border)] bg-[var(--nb-cyan)] px-8 py-4 font-black uppercase tracking-widest text-black shadow-[6px_6px_0px_var(--nb-shadow)] transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_var(--nb-shadow)] active:translate-y-1 active:shadow-[0px_0px_0px_var(--nb-shadow)] text-lg">
               <Logo className="size-6 text-black" />
               {t('hero.cta.primary')}
             </a>
@@ -408,7 +408,7 @@ export default function LandingPage() {
             {t('cta.sub')}
           </motion.p>
           <motion.div variants={fadeInUp} className="mt-12 flex flex-col items-center gap-5 sm:flex-row sm:justify-center">
-            <a href="/auth/login" className="flex items-center gap-3 border-4 border-black bg-[var(--nb-lime)] px-10 py-5 font-black uppercase tracking-widest text-black shadow-[8px_8px_0px_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(255,255,255,0.1)] active:translate-y-0 active:shadow-none text-xl">
+            <a href="/auth/login" className="flex items-center gap-3 border-4 border-black bg-[var(--nb-cyan)] px-10 py-5 font-black uppercase tracking-widest text-black shadow-[8px_8px_0px_rgba(255,255,255,0.1)] transition-transform hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(255,255,255,0.1)] active:translate-y-0 active:shadow-none text-xl">
               <Logo className="size-7 text-black" />
               {t('cta.btn')}
             </a>
