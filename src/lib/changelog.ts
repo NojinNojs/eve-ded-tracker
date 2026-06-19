@@ -8,6 +8,16 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.4.5',
+    date: '2026-06-19',
+    title: 'Hotfix: Legacy Auth Data Restoration',
+    features: [
+      'Fixed a critical issue where legacy users appeared to lose their data after re-logging.',
+      'Restored backward compatibility for original authentication identities.',
+    ],
+    fixes: []
+  },
+  {
     version: 'v1.4.4',
     date: '2026-06-19',
     title: 'Data Reliability & Security Hotfix',

@@ -89,58 +89,60 @@ export async function GET(request: Request) {
 
     const character: EveCharacter = await verifyRes.json();
 
-    // ── Step 3: Sign up or sign in to Supabase ──────────
-    const email = characterEmail(character.CharacterID);
+    // Legacy vs New email formats
+    const emailCom = `eve-${character.CharacterID}@eveonline.com`;
+    const emailLocal = `eve-${character.CharacterID}@eveonline.local`;
     const password = characterPassword(character.CharacterOwnerHash);
 
     const supabase = await createClient();
 
-    // Try sign in first (existing user)
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
+    // 1. Try legacy sign in (.local) first
+    let { error: signInError } = await supabase.auth.signInWithPassword({
+      email: emailLocal,
       password,
     });
 
+    // 2. If legacy fails, try new sign in (.com)
     if (signInError) {
-      if (signInError.message.includes('Invalid login credentials')) {
-        // User doesn't exist yet → sign up
-        const { error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              character_id: character.CharacterID,
-              character_name: character.CharacterName,
-              full_name: character.CharacterName,
-              character_owner_hash: character.CharacterOwnerHash,
-            },
+      const { error: comError } = await supabase.auth.signInWithPassword({
+        email: emailCom,
+        password,
+      });
+      signInError = comError;
+    }
+
+    if (signInError) {
+      // User doesn't exist yet → sign up with new format (.com)
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: emailCom,
+        password,
+        options: {
+          data: {
+            character_id: character.CharacterID,
+            character_name: character.CharacterName,
+            full_name: character.CharacterName,
+            character_owner_hash: character.CharacterOwnerHash,
           },
-        });
+        },
+      });
 
-        if (signUpError) {
-          console.error('Supabase sign-up error:', signUpError.message);
-          return NextResponse.redirect(
-            `${origin}?error=${encodeURIComponent(signUpError.message)}`
-          );
-        }
-
-        // Auto-confirm: sign in immediately after signup
-        const { error: postSignInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (postSignInError) {
-          console.error('Post-signup sign-in error:', postSignInError.message);
-          return NextResponse.redirect(
-            `${origin}?error=${encodeURIComponent('Sign-in after registration failed.')}`
-          );
-        }
-      } else {
-        // This is a network error (like ENOTFOUND) or rate limit, etc.
-        console.error('Supabase sign-in error:', signInError);
+      if (signUpError) {
+        console.error('Supabase sign-up error:', signUpError.message);
         return NextResponse.redirect(
-          `${origin}?error=${encodeURIComponent('Database connection error. If using local Supabase, ensure it is running.')}`
+          `${origin}?error=${encodeURIComponent(signUpError.message)}`
+        );
+      }
+
+      // Auto-confirm: sign in immediately after signup
+      const { error: postSignInError } = await supabase.auth.signInWithPassword({
+        email: emailCom,
+        password,
+      });
+
+      if (postSignInError) {
+        console.error('Post-signup sign-in error:', postSignInError.message);
+        return NextResponse.redirect(
+          `${origin}?error=${encodeURIComponent('Sign-in after registration failed. Please try logging in again.')}`
         );
       }
     }
