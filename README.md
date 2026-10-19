@@ -1,15 +1,15 @@
-# EVE DED Tracker 🚀
+# EVE DED Tracker
 
-A modern, high-performance web application designed to track and analyze your DED (Dead End) runs in EVE Online. Built to help Capsuleers manage their ledgers, measure their profit, and optimize their escalation farming.
+Web app for logging DED escalation runs, loot drops, and net ISK profit in EVE Online.
 
 ## ✨ Features
 
 - 📊 **Detailed Run Tracking**: Record DED ratings, factions, loot value, and initial capital costs.
 - 💰 **Profit Analysis**: Automatically calculates net PnL (Profit and Loss) and average ISK per run.
-- 🎨 **Responsive & Themed UI**: Gorgeous UI powered by Tailwind CSS, with support for both Dark and Light modes. 
+- 🎨 **Responsive & Themed UI**: Dark and light mode UI built with Tailwind CSS. 
 - 🌐 **Internationalization (i18n)**: Seamlessly switch between languages (EN, ID) on the fly.
 - 🔐 **Secure Authentication**: Built-in authentication utilizing Supabase, integrating EVE SSO capabilities.
-- ⚡ **Fast & Modern Stack**: Built using Next.js 16 (App Router) + React 19 + Bun for extremely fast development and build times.
+- ⚡ **Fast & Modern Stack**: Built with Next.js (App Router), React, and Bun.
 
 ## 🛠️ Tech Stack
 
