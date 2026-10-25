@@ -10,7 +10,7 @@ import type { DedRun } from '@/lib/types';
 import StatCard from '@/components/StatCard';
 import InsightStrip from '@/components/InsightStrip';
 import Sparkline from '@/components/charts/Sparkline';
-import LevelBars from '@/components/charts/LevelBars';
+import TierColumns from '@/components/charts/TierColumns';
 
 interface Props {
   runs: DedRun[];
@@ -152,7 +152,7 @@ export default function StatsDashboard({ runs }: Props) {
                 <BarChart3 className="size-4" strokeWidth={2.5} />
                 {t('stat.by_level')}
               </h3>
-              <LevelBars buckets={insights.byLevel} />
+              <TierColumns buckets={insights.byLevel} emptyLabel={t('stat.no_data')} />
               <div className="mt-3 grid grid-cols-2 gap-2 border-t-2 border-dashed border-[var(--nb-border)] pt-2">
                 {[
                   { key: t('history.bought'), data: insights.bought },

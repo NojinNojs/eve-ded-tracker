@@ -10,11 +10,6 @@ export default function Footer() {
 
   return (
     <footer className="mt-auto border-t-3 border-[var(--nb-border)] bg-[var(--nb-surface)] relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="pointer-events-none absolute right-0 top-0 hidden -translate-y-1/2 translate-x-1/3 opacity-5 sm:block">
-        <Logo className="size-96" />
-      </div>
-
       <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 border-b-2 border-[var(--nb-border)] pb-8">
           

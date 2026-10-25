@@ -23,24 +23,24 @@ const dict = {
   },
 
   /* ── Hero ─────────────────────────────── */
-  'hero.badge': { en: '⚡ Free & Open Source', id: '⚡ Gratis & Open Source' },
-  'hero.h1.line1': { en: 'Stop guessing.', id: 'Berhenti nebak.' },
-  'hero.h1.line2': { en: 'Start counting', id: 'Mulai hitung' },
-  'hero.h1.line3': { en: 'your ISK.', id: 'ISK lu.' },
+  'hero.badge': { en: 'Free · EVE SSO · No spreadsheet', id: 'Gratis · EVE SSO · Tanpa spreadsheet' },
+  'hero.h1.line1': { en: 'Your DEDs pay.', id: 'DED lu bayar.' },
+  'hero.h1.line2': { en: 'Do you know', id: 'Tapi tau' },
+  'hero.h1.line3': { en: 'how much?', id: 'berapa?' },
   'hero.sub': {
-    en: 'You run DEDs every day but never actually know your real profit. **DED Tracker** logs all your loot, costs, and PNL — clean and organized.',
-    id: 'Lu run DED tiap hari tapi gak pernah tau berapa profit sebenarnya. **DED Tracker** catat semua loot, cost, dan PNL lu — rapi dan terukur.',
+    en: 'Paste your cargo, get Jita prices, log the run. **DED Tracker** keeps every escalation, every bookmark you bought, and every ISK of net profit in one ledger.',
+    id: 'Paste cargo, dapet harga Jita, simpan run-nya. **DED Tracker** nyatet tiap eskalasi, tiap bookmark yang lu beli, dan tiap ISK profit bersih di satu ledger.',
   },
-  'hero.cta.primary': { en: 'Start Tracking ISK', id: 'Mulai Tracking ISK' },
-  'hero.cta.secondary': { en: 'See Demo', id: 'Lihat Demo' },
+  'hero.cta.primary': { en: 'Sign in with EVE', id: 'Masuk dengan EVE' },
+  'hero.cta.secondary': { en: 'See a sample ledger', id: 'Lihat contoh ledger' },
 
   /* ── Stats Ribbon ────────────────────── */
-  'ribbon.1.val': { en: 'Instant', id: 'Instan' },
-  'ribbon.1.label': { en: 'Loot Appraisal', id: 'Harga Loot' },
-  'ribbon.2.val': { en: 'Secure', id: 'Aman' },
-  'ribbon.2.label': { en: 'EVE Login', id: 'Login EVE' },
-  'ribbon.3.val': { en: '100%', id: '100%' },
-  'ribbon.3.label': { en: 'Free Forever', id: 'Gratis Selamanya' },
+  'ribbon.1.val': { en: 'Janice', id: 'Janice' },
+  'ribbon.1.label': { en: 'Jita appraisal', id: 'Harga Jita' },
+  'ribbon.2.val': { en: 'EVE SSO', id: 'EVE SSO' },
+  'ribbon.2.label': { en: 'no new password', id: 'tanpa password baru' },
+  'ribbon.3.val': { en: 'Free', id: 'Gratis' },
+  'ribbon.3.label': { en: 'never paywalled', id: 'nggak dipagari' },
 
   /* ── Pain Points ─────────────────────── */
   'pain.kicker': { en: 'Sound familiar?', id: 'Pernah ngalamin?' },
@@ -62,53 +62,53 @@ const dict = {
   },
 
   /* ── Demo ─────────────────────────────── */
-  'demo.kicker': { en: 'Try it yourself', id: 'Coba sendiri' },
-  'demo.title': { en: "Here's what you get", id: 'Ini yang lu dapet' },
+  'demo.kicker': { en: 'Sample ledger', id: 'Contoh ledger' },
+  'demo.title': { en: 'The numbers a DED runner actually checks.', id: 'Angka yang beneran dicek DED runner.' },
   'demo.hint': {
-    en: '↑ Click any row to see details. Your data will look like this after signing in.',
-    id: '↑ Klik row mana aja buat liat detail. Data lu bakal kayak gini setelah login.',
+    en: 'Click any row. Same app, same maths — this sample goes through the identical calculation the signed-in dashboard uses.',
+    id: 'Klik row mana aja. App yang sama, hitungan yang sama — sampel ini lewat jalur kalkulasi yang persis dipakai dashboard setelah login.',
   },
   'demo.badge': { en: 'SAMPLE DATA', id: 'DATA SAMPEL' },
-  'demo.ledger': { en: 'Run History (Demo)', id: 'Riwayat Run (Demo)' },
+  'demo.ledger': { en: 'Ledger', id: 'Ledger' },
   'demo.bought': { en: 'BOUGHT', id: 'BELI' },
   'demo.free': { en: 'FREE', id: 'GRATIS' },
 
   /* ── Selling Points ──────────────────── */
-  'sell.kicker': { en: 'Why DED Tracker?', id: 'Kenapa DED Tracker?' },
-  'sell.title': { en: 'Features that make you profit', id: 'Fitur yang bikin lu untung' },
-  'sell.1.title': { en: 'Paste Loot → Instant Price', id: 'Paste Loot → Langsung Ada Harga' },
+  'sell.kicker': { en: 'What is inside', id: 'Isinya apa' },
+  'sell.title': { en: 'Built for people who run these daily', id: 'Dibikin buat yang nge-run tiap hari' },
+  'sell.1.title': { en: 'Paste cargo, get a price', id: 'Paste cargo, langsung ada harga' },
   'sell.1.desc': {
-    en: 'Copy loot from your cargo, paste into the form — get Jita prices in seconds. Or enter your ISK manually.',
-    id: 'Copy loot dari cargo, paste ke form — dapet harga Jita dalam hitungan detik. Atau ketik ISK manual.',
+    en: 'Copy the loot from your cargo hold, paste it in, and Janice prices it against Jita. Buying, selling or split — your call. Or type the ISK yourself.',
+    id: 'Copy loot dari cargo, paste, Janice kasih harga Jita. Mode beli, jual, atau split — terserah lu. Atau ketik ISK-nya sendiri.',
   },
-  'sell.1.badge': { en: 'Auto-appraisal', id: 'Auto-appraisal' },
-  'sell.2.title': { en: 'PNL Per Run, Per Faction, Per Level', id: 'PNL Per Run, Per Faction, Per Level' },
+  'sell.1.badge': { en: 'Janice API', id: 'Janice API' },
+  'sell.2.title': { en: 'A ledger you can work in', id: 'Ledger yang bisa diajak kerja' },
   'sell.2.desc': {
-    en: 'Know exactly how much net profit each run generates. See which factions and DED levels pay the most.',
-    id: 'Tau persis berapa net profit tiap run. Lihat faction dan level DED mana yang paling menghasilkan.',
+    en: 'Search by faction, tier or Janice code. Filter, sort any column, fix a wrong number without re-logging the run, and export exactly what you are looking at to CSV.',
+    id: 'Cari pakai faksi, tier, atau kode Janice. Filter, sort kolom apa aja, benerin angka yang salah tanpa log ulang, dan ekspor yang lagi lu lihat ke CSV.',
   },
-  'sell.2.badge': { en: 'Detailed breakdown', id: 'Breakdown lengkap' },
-  'sell.3.title': { en: 'Track Bought vs Free Escalations', id: 'Track Beli vs Free Eskalasi' },
+  'sell.2.badge': { en: 'CSV export', id: 'Ekspor CSV' },
+  'sell.3.title': { en: 'Numbers that agree with each other', id: 'Angka yang nggak saling bertengkar' },
   'sell.3.desc': {
-    en: 'Separate purchased vs natural escalations. Know if your capital investment is paying off.',
-    id: 'Bedakan eskalasi beli vs drop sendiri. Tau capital cost lu balik atau gak.',
+    en: 'Net PNL, win rate, profit factor, return on bookmarks, cumulative curve, profit per tier. One run list, one calculation — every card reads from it.',
+    id: 'PNL bersih, win rate, profit factor, balik modal bookmark, kurva kumulatif, profit per tier. Satu daftar run, satu hitungan — semua kartu baca dari situ.',
   },
-  'sell.3.badge': { en: 'Capital tracking', id: 'Tracking modal' },
-  'sell.4.title': { en: 'Login with EVE, Data Secured', id: 'Login Pake EVE, Data Aman' },
+  'sell.3.badge': { en: 'One source of truth', id: 'Satu sumber angka' },
+  'sell.4.title': { en: 'Your ledger, nobody else’s', id: 'Ledger lu, bukan orang lain' },
   'sell.4.desc': {
-    en: 'Sign in with your EVE character. Your data is private — nobody else can see it.',
-    id: 'Login pake character EVE lu. Data tersimpan di akun lu, gak ada yang bisa liat.',
+    en: 'Sign in with EVE SSO — no new password. Row-level security in Postgres means another capsuleer cannot read your runs, even if they guess the endpoint.',
+    id: 'Masuk pakai EVE SSO — nggak perlu password baru. Row-level security di Postgres bikin capsuleer lain nggak bisa baca run lu, walau mereka nebak endpoint-nya.',
   },
-  'sell.4.badge': { en: 'Secure & private', id: 'Aman & privat' },
+  'sell.4.badge': { en: 'EVE SSO', id: 'EVE SSO' },
 
   /* ── CTA ──────────────────────────────── */
-  'cta.title.1': { en: 'Ready to see your real profit', id: 'Siap lihat profit asli lu' },
-  'cta.title.2': { en: 'from DEDs this month?', id: 'dari DED bulan ini?' },
+  'cta.title.1': { en: 'See what this month actually paid', id: 'Lihat bulan ini beneran bayar berapa' },
+  'cta.title.2': { en: 'from DEDs.', id: 'dari DED.' },
   'cta.sub': {
-    en: 'Sign in with your EVE character, log your first run — it takes 30 seconds. Free, no strings attached.',
-    id: 'Login pake character EVE lu, log run pertama — cuma 30 detik. Gratis, tanpa embel-embel.',
+    en: 'Sign in with your EVE character and log the next run you finish. Thirty seconds, and the ledger starts paying attention.',
+    id: 'Masuk pakai character EVE lu, terus log run berikutnya. Tiga puluh detik, dan ledger mulai merhatiin.',
   },
-  'cta.btn': { en: 'Start Now', id: 'Mulai Sekarang' },
+  'cta.btn': { en: 'Start tracking', id: 'Mulai tracking' },
   'cta.footer': { en: 'Fly safe. Track smarter.', id: 'Fly safe. Track smarter.' },
 
   /* ── Stats ────────────────────────────── */
@@ -148,6 +148,7 @@ const dict = {
   },
   'stat.by_site': { en: 'Average per site', id: 'Rata-rata per site' },
   'stat.by_site.hint': { en: 'faction + tier, avg net ISK', id: 'faksi + tier, rata-rata ISK bersih' },
+  'stat.by_level.hint': { en: 'net ISK per tier', id: 'ISK bersih per tier' },
 
   /* ── Form ─────────────────────────────── */
   'form.title': { en: 'Log Escalation', id: 'Log Eskalasi' },

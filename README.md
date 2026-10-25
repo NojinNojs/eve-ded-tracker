@@ -60,9 +60,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```bash
 bun run lint
 ```
-- Check the money and ledger logic (ISK parsing, sorting, PNL aggregation, CSV escaping):
+- Run the unit suite (ISK parsing, sorting, PNL aggregation, CSV escaping, sample data):
 ```bash
-bun run check:logic
+bun test
+```
+- Boot the production build and check the page actually renders:
+```bash
+bun run build && bun run test:smoke
+```
+- Or all three gates at once:
+```bash
+bun run verify
 ```
 - Build the production-ready project:
 ```bash

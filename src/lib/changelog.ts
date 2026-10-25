@@ -8,6 +8,24 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.6.0',
+    date: '2026-10-25',
+    title: 'A Straighter Face',
+    features: [
+      'Profit per tier is a column chart now: tiers climb left to right, zero sits on the axis, and losses hang below it.',
+      'New mark: one solid block whose edge steps up like an escalation ladder. It also lives in the favicon.',
+      'The landing page shows a real sample ledger — the same maths as the signed-in dashboard, not a screenshot.',
+      'Unit tests for the money paths: ISK parsing, sorting, PNL aggregation, CSV escaping and the sample data.',
+      '`bun run verify` runs lint, tests and the build; `bun run test:smoke` boots the build and checks the page renders.',
+    ],
+    fixes: [
+      'Profit and loss text now clears WCAG AA on the cream background.',
+      'Tier labels use compact ISK so six columns fit a phone without ellipses.',
+      'Removed the faded logo watermark in the footer that read as a stray grey block.',
+      'The chart no longer overflows its plot when one tier dwarfs the rest.',
+    ],
+  },
+  {
     version: 'v1.5.0',
     date: '2026-10-25',
     title: 'Ledger That Works For You',

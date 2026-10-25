@@ -43,3 +43,5 @@ next-env.d.ts
 # agents
 .agents/
 skills-lock.json
+# local screenshots from UI review
+/.shots/

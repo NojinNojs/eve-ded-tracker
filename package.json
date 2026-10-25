@@ -1,13 +1,15 @@
 {
   "name": "eve-ded-tracker",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:logic": "bun run scripts/logic-check.ts"
+    "test": "bun test",
+    "test:smoke": "bash scripts/smoke.sh",
+    "verify": "bun run lint && bun run test && bun run build"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bun": "^1.4.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

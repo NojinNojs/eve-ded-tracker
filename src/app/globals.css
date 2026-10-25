@@ -307,8 +307,8 @@ body {
 .nb-row:hover { background: color-mix(in srgb, var(--nb-amber) 30%, var(--nb-surface)); }
 
 /* ─── Profit / Loss ─────────────────── */
-.text-profit { color: #16a34a; font-weight: 800; }
-.text-loss   { color: #dc2626; font-weight: 800; }
+.text-profit { color: #15803d; font-weight: 800; }
+.text-loss   { color: #c81e1e; font-weight: 800; }
 .dark .text-profit { color: #4ade80; }
 .dark .text-loss   { color: #f87171; }
 
