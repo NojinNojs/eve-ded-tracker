@@ -9,9 +9,11 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { changelog, CURRENT_VERSION } from '@/lib/changelog';
+import { useI18n } from '@/lib/i18n';
 import { Megaphone, Rocket, Wrench } from 'lucide-react';
 
 export default function ChangelogModal() {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function ChangelogModal() {
             </div>
             <div>
               <DialogTitle className="text-xl font-black uppercase tracking-tight text-black">
-                Update: {latestUpdate.version}
+                {latestUpdate.version} — {latestUpdate.title}
               </DialogTitle>
               <DialogDescription className="text-xs font-bold text-black/70">
                 {latestUpdate.date} — {latestUpdate.title}
@@ -58,7 +60,7 @@ export default function ChangelogModal() {
             <div className="flex flex-col gap-3">
               <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-wider text-[var(--nb-text)]">
                 <Rocket className="size-4 text-[var(--nb-cyan)]" strokeWidth={3} />
-                New Features
+                {t('changelog.new')}
               </h3>
               <ul className="flex flex-col gap-2">
                 {latestUpdate.features.map((feature, i) => (
@@ -74,7 +76,7 @@ export default function ChangelogModal() {
             <div className="flex flex-col gap-3">
               <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-wider text-[var(--nb-text)]">
                 <Wrench className="size-4 text-[var(--nb-pink)]" strokeWidth={3} />
-                Fixes & Improvements
+                {t('changelog.fixes')}
               </h3>
               <ul className="flex flex-col gap-2">
                 {latestUpdate.fixes.map((fix, i) => (
@@ -92,7 +94,7 @@ export default function ChangelogModal() {
             onClick={() => handleClose(false)}
             className="nb-btn nb-btn-primary px-8 py-2 text-sm"
           >
-            Got it!
+            {t('changelog.got_it')}
           </button>
         </div>
       </DialogContent>

@@ -8,6 +8,30 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.5.0',
+    date: '2026-10-25',
+    title: 'Ledger That Works For You',
+    features: [
+      'Export the ledger to CSV. Filter first, then export exactly what you filtered.',
+      'Edit a run instead of deleting it. Fat-fingered the loot paste? Fix the number, the PNL recalculates.',
+      'New numbers under the stat cards: win rate, ISK spent on bookmarks, profit factor, and return on bookmarks.',
+      'Cumulative PNL sparkline and profit-per-DED-tier bars, both scoped to the range you pick.',
+      'Search by faction, tier, or Janice code. Press / to jump straight into the box.',
+      'Run detail popup: capital, loot, pricing mode, and the Janice appraisal link in one place.',
+    ],
+    fixes: [
+      'Language choice persists now — stored in a cookie, so no English flash on first paint.',
+      'Best Run shows the single best escalation again. It was quietly reporting a faction + tier total.',
+      'Changing price mode or percentage after an appraisal no longer leaves a stale loot value on screen.',
+      'Sort headers are real buttons, so keyboard and screen reader users can sort the table.',
+      'Dark mode is applied before the first paint. No more white flash on load.',
+      'Fixed the footer panels with no background, and the account chevron that never rotated.',
+      'Typing 1,234,567 no longer collapses to a wrong number; both separator styles parse correctly.',
+      'Added reduced-motion support, visible focus rings, and properly labelled form fields.',
+      'Every hardcoded English string is translated now, including toasts and empty states.',
+    ],
+  },
+  {
     version: 'v1.4.5',
     date: '2026-06-19',
     title: 'Hotfix: Legacy Auth Data Restoration',

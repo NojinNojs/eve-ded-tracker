@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t-3 border-[var(--nb-border)] bg-[var(--nb-surface)] relative overflow-hidden">
       {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 opacity-5 pointer-events-none">
+      <div className="pointer-events-none absolute right-0 top-0 hidden -translate-y-1/2 translate-x-1/3 opacity-5 sm:block">
         <Logo className="size-96" />
       </div>
 
@@ -51,7 +51,7 @@ export default function Footer() {
                   <span className="text-sm font-black text-[var(--nb-text)]">sankuuu</span>
                 </div>
               </div>
-              <div className="flex items-center gap-3 bg-[var(--nb-bg)] px-3 py-2 border-2 border-[var(--nb-border)] shadow-[2px_2px_0px_var(--nb-shadow)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--nb-shadow)] transition-all group cursor-default">
+              <div className="flex items-center gap-3 bg-[var(--nb-surface)] px-3 py-2 border-2 border-[var(--nb-border)] shadow-[2px_2px_0px_var(--nb-shadow)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--nb-shadow)] transition-all group cursor-default">
                 <Mail className="size-4 text-[var(--nb-text-muted)] group-hover:text-[var(--nb-text)] transition-colors" />
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold uppercase text-[var(--nb-text-muted)] leading-none">{t('footer.mail')}</span>
@@ -67,9 +67,9 @@ export default function Footer() {
               {t('footer.prefs')}
             </p>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 border-2 border-[var(--nb-border)] bg-[var(--nb-bg)] p-1 shadow-[2px_2px_0px_var(--nb-shadow)]">
+              <div className="flex items-center gap-1.5 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] p-1 shadow-[2px_2px_0px_var(--nb-shadow)]">
                 <Globe className="size-4 text-[var(--nb-text-faint)] ml-2 hidden sm:block" strokeWidth={2} />
-                <div className="lang-switch" role="group" aria-label="Language">
+                <div className="lang-switch" role="group" aria-label={t('footer.language')}>
                   <button
                     onClick={() => setLocale('en')}
                     className={locale === 'en' ? 'active' : ''}
@@ -98,7 +98,7 @@ export default function Footer() {
         </div>
 
         {/* Disclaimer */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left text-[10px] sm:text-xs text-[var(--nb-text-muted)] font-medium opacity-60 hover:opacity-100 transition-opacity">
+        <div className="pt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left text-[10px] sm:text-xs text-[var(--nb-text-muted)] font-medium">
           <ShieldAlert className="size-6 shrink-0 hidden sm:block" strokeWidth={1.5} />
           <p>
             EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. 

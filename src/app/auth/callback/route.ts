@@ -12,7 +12,6 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import {
   EVE_SSO,
-  characterEmail,
   characterPassword,
   type EveCharacter,
 } from '@/lib/eve-sso';
@@ -157,14 +156,17 @@ export async function GET(request: Request) {
 
     // Success → redirect to dashboard
     return NextResponse.redirect(origin);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('EVE SSO callback error:', err);
     let errorMsg = 'Authentication failed';
-    
-    if (err.message && err.message.includes('fetch failed')) {
+
+    const rawMessage =
+      err instanceof Error ? err.message : typeof err === 'string' ? err : '';
+
+    if (rawMessage.includes('fetch failed')) {
       errorMsg = 'Failed to connect to EVE SSO servers. Please check your internet connection or DNS.';
-    } else if (err.message) {
-      errorMsg = err.message;
+    } else if (rawMessage) {
+      errorMsg = rawMessage;
     }
 
     return NextResponse.redirect(

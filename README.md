@@ -2,14 +2,14 @@
 
 Web app for logging DED escalation runs, loot drops, and net ISK profit in EVE Online.
 
-## ✨ Features
+## Features
 
-- 📊 **Detailed Run Tracking**: Record DED ratings, factions, loot value, and initial capital costs.
-- 💰 **Profit Analysis**: Automatically calculates net PnL (Profit and Loss) and average ISK per run.
-- 🎨 **Responsive & Themed UI**: Dark and light mode UI built with Tailwind CSS. 
-- 🌐 **Internationalization (i18n)**: Seamlessly switch between languages (EN, ID) on the fly.
-- 🔐 **Secure Authentication**: Built-in authentication utilizing Supabase, integrating EVE SSO capabilities.
-- ⚡ **Fast & Modern Stack**: Built with Next.js (App Router), React, and Bun.
+- **Run logging**: DED tier, faction, loot appraised through Janice or typed by hand, and the capital spent on the bookmark.
+- **A ledger you can work in**: search by faction, tier or Janice code, filter, sort any column, edit a run instead of deleting it, export the filtered list to CSV.
+- **Numbers that agree**: net PNL, average per run, win rate, profit factor, return on bookmarks, cumulative PNL, and profit per DED tier all come from the same run list.
+- **Light and dark mode** without a flash of the wrong theme on load.
+- **EN / ID**, remembered across reloads through a cookie, so the server renders the right language on first paint.
+- **EVE SSO via Supabase**, with row-level security: a capsuleer only ever sees their own runs.
 
 ## 🛠️ Tech Stack
 
@@ -59,6 +59,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Run the Linter to ensure the codebase follows strict standard configurations:
 ```bash
 bun run lint
+```
+- Check the money and ledger logic (ISK parsing, sorting, PNL aggregation, CSV escaping):
+```bash
+bun run check:logic
 ```
 - Build the production-ready project:
 ```bash

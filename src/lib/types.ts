@@ -44,17 +44,6 @@ export interface DedRunInsert {
   janice_code?: string | null;
 }
 
-/** Aggregated stats for the dashboard cards */
-export interface DashboardStats {
-  totalProfit: number;
-  totalRuns: number;
-  mostProfitable: {
-    faction: Faction;
-    dedType: DedType;
-    profit: number;
-  } | null;
-}
-
 /** Dropdown option helper */
 export interface SelectOption<T extends string = string> {
   label: string;
@@ -84,3 +73,8 @@ export const PRICING_MODES: SelectOption<PricingMode>[] = [
   { label: 'Sell', value: 'sell' },
   { label: 'Split', value: 'split' },
 ];
+
+/** Janice deep link for an appraisal code. */
+export function janiceUrl(code: string | null | undefined): string | null {
+  return code ? `https://janice.e-351.com/a/${code}` : null;
+}

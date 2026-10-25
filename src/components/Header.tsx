@@ -14,7 +14,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Header() {
-  const { locale, setLocale, t } = useI18n();
+  const { t } = useI18n();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -57,21 +57,22 @@ export default function Header() {
             <Skeleton className="h-10 w-28 border-3 border-[var(--nb-border)]" />
           ) : user ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="nb-btn nb-btn-secondary text-xs py-2 nb-focus">
+              <DropdownMenuTrigger className="nb-btn nb-btn-secondary group text-xs py-2 nb-focus">
                 {portraitUrl && (
                   <img
                     src={portraitUrl}
-                    alt=""
+                    alt={characterName}
+                    loading="lazy"
                     className="size-7 border-2 border-[var(--nb-border)] transition-transform hover:scale-110"
                   />
                 )}
                 <span className="hidden sm:inline font-black">{characterName}</span>
-                <ChevronDown className="size-4 transition-transform group-data-[state=open]:rotate-180" />
+                <ChevronDown className="size-4 transition-transform group-data-[popup-open]:rotate-180" aria-hidden="true" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52 border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[4px_4px_0px_var(--nb-shadow)] rounded-none animate-scale-in">
                 <div className="flex items-center gap-3 px-3 py-3 border-b-2 border-[var(--nb-border)]">
                   {portraitUrl && (
-                    <img src={portraitUrl} alt="" className="size-10 border-2 border-[var(--nb-border)]" />
+                    <img src={portraitUrl} alt={characterName} loading="lazy" className="size-10 border-2 border-[var(--nb-border)]" />
                   )}
                   <div>
                     <p className="text-sm font-black">{characterName}</p>
@@ -92,8 +93,8 @@ export default function Header() {
           ) : (
             <a href="/auth/login" className="nb-btn nb-btn-primary nb-focus flex items-center gap-2">
               <LogIn className="size-4" strokeWidth={3} />
-              <span className="hidden sm:inline">EVE LOGIN</span>
-              <span className="sm:hidden">LOGIN</span>
+              <span className="hidden sm:inline">{t('nav.signin')}</span>
+              <span className="sm:hidden">EVE</span>
             </a>
           )}
         </div>

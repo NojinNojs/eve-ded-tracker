@@ -53,6 +53,10 @@ export default function LandingPage() {
   const totalCost = DEMO_RUNS.reduce((s, r) => s + r.cost, 0);
   const totalProfit = totalLoot - totalCost;
   const avgPerRun = totalProfit / DEMO_RUNS.length;
+  const bestFaction = DEMO_RUNS.reduce((best, run) => {
+    const profit = run.loot - run.cost;
+    return profit > best.profit ? { faction: run.faction, profit } : best;
+  }, { faction: '—', profit: -Infinity }).faction;
 
   const painPoints = [
     { icon: Skull, title: t('pain.1.title'), desc: t('pain.1.desc'), color: 'bg-[var(--nb-pink)]', rotate: '-rotate-2' },
@@ -78,9 +82,9 @@ export default function LandingPage() {
     <div className="flex flex-col items-center overflow-hidden">
       
       {/* ── Marquee ───────────────────────── */}
-      <div className="marquee-strip w-full border-b-4 border-[var(--nb-border)]">
+      <div className="marquee-strip w-full border-b-4 border-[var(--nb-border)]" aria-hidden="true">
         <div className="marquee-inner">
-          {Array.from({ length: 15 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <span key={i} className="mx-6 text-sm font-black uppercase tracking-wider text-black flex items-center gap-2">
               <Zap className="size-4" />
               {t('marquee.text')}
@@ -217,7 +221,7 @@ export default function LandingPage() {
                 { label: t('net_profit'), value: `+${formatISK(totalProfit)}`, color: 'bg-[var(--nb-cyan)]', rotate: '-rotate-1' },
                 { label: t('total_runs'), value: String(DEMO_RUNS.length), color: 'bg-[var(--nb-lime)]', rotate: 'rotate-2' },
                 { label: t('avg_isk_run'), value: formatISK(avgPerRun), color: 'bg-[var(--nb-amber)]', rotate: '-rotate-2' },
-                { label: t('best_faction'), value: 'Guristas', color: 'bg-[var(--nb-pink)]', rotate: 'rotate-1' },
+                { label: t('best_faction'), value: bestFaction, color: 'bg-[var(--nb-pink)]', rotate: 'rotate-1' },
               ].map((s, i) => (
                 <div key={i} className={cn("border-4 border-[var(--nb-border)] p-4 sm:p-6 shadow-[6px_6px_0px_var(--nb-shadow)] flex flex-col justify-between", s.color, s.rotate)}>
                   <p className="text-xs font-black uppercase tracking-widest text-black/60 mb-2">{s.label}</p>
@@ -274,7 +278,7 @@ export default function LandingPage() {
                                 'border-2 border-[var(--nb-border)] px-1.5 py-0.5 text-[9px] font-black uppercase tracking-widest text-black',
                                 run.bought ? 'bg-[var(--nb-pink)]' : 'bg-[var(--nb-lime)]'
                               )}>
-                                {run.bought ? 'BOUGHT' : 'FREE'}
+                                {run.bought ? t('demo.bought') : t('demo.free')}
                               </span>
                             </div>
                           </div>

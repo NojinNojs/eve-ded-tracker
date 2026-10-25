@@ -1,12 +1,13 @@
 {
   "name": "eve-ded-tracker",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:logic": "bun run scripts/logic-check.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",

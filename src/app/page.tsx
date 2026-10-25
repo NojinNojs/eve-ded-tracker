@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import LandingPage from '@/components/LandingPage';
 import Dashboard from '@/components/Dashboard';
-import { fetchDedRuns, fetchDashboardStats } from '@/app/actions/ded-runs';
+import { fetchDedRuns } from '@/app/actions/ded-runs';
 
 export default async function Home() {
   const supabase = await createClient();
@@ -11,10 +11,7 @@ export default async function Home() {
     return <LandingPage />;
   }
 
-  const [runs, stats] = await Promise.all([
-    fetchDedRuns(),
-    fetchDashboardStats(),
-  ]);
+  const runs = await fetchDedRuns();
 
-  return <Dashboard runs={runs} stats={stats} />;
+  return <Dashboard runs={runs} />;
 }
