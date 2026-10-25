@@ -115,7 +115,7 @@ export default function HistoryFilters({
         <button
           type="button"
           onClick={onReset}
-          className="flex items-center gap-1 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] px-2 py-1.5 text-[10px] font-black uppercase tracking-wider shadow-[2px_2px_0px_var(--nb-shadow)] hover-press"
+          className="flex items-center gap-1 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] px-2 py-1.5 text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_var(--nb-shadow)] hover-press"
         >
           <RotateCcw className="size-3" strokeWidth={3} aria-hidden="true" />
           {t('history.reset')}
@@ -126,7 +126,7 @@ export default function HistoryFilters({
         type="button"
         onClick={onExport}
         disabled={!canExport}
-        className="nb-btn nb-btn-secondary ml-auto px-2.5 py-1.5 text-[10px] disabled:opacity-40"
+        className="nb-btn nb-btn-secondary ml-auto px-2.5 py-1.5 text-xs disabled:opacity-40"
       >
         <Download className="size-3.5" strokeWidth={2.5} aria-hidden="true" />
         <span className="hidden sm:inline">{t('history.export')}</span>

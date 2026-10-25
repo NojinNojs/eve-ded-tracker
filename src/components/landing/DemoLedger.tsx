@@ -47,7 +47,7 @@ export default function DemoLedger() {
             className="flex flex-col justify-between border-3 border-[var(--nb-border)] p-3 text-black shadow-[5px_5px_0px_var(--nb-shadow)] sm:p-4"
             style={{ background: card.color }}
           >
-            <span className="text-[10px] font-black uppercase leading-tight tracking-[0.12em] opacity-70">
+            <span className="text-xs font-black uppercase leading-tight tracking-[0.12em] opacity-70">
               {card.label}
             </span>
             <span className="mt-2 whitespace-nowrap font-mono text-base font-black leading-none sm:text-xl">
@@ -71,7 +71,7 @@ export default function DemoLedger() {
               'border-[var(--nb-border)]'
             )}
           >
-            <dt className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+            <dt className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
               {metric.label}
             </dt>
             <dd className="font-mono text-sm font-black leading-none">{metric.value}</dd>
@@ -82,8 +82,8 @@ export default function DemoLedger() {
       {/* chart */}
       <div className="border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] p-4 shadow-[5px_5px_0px_var(--nb-shadow)]">
         <div className="mb-3 flex items-baseline justify-between border-b-3 border-[var(--nb-border)] pb-2">
-          <h3 className="text-[11px] font-black uppercase tracking-[0.12em]">{t('stat.by_level')}</h3>
-          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
+          <h3 className="text-xs font-black uppercase tracking-[0.12em]">{t('stat.by_level')}</h3>
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
             {t('stat.by_site.hint')}
           </span>
         </div>
@@ -93,10 +93,10 @@ export default function DemoLedger() {
       {/* ledger */}
       <div className="border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[7px_7px_0px_var(--nb-shadow)]">
         <div className="flex items-center justify-between gap-3 border-b-3 border-[var(--nb-border)] bg-[var(--nb-violet)] px-4 py-2.5">
-          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-black">
+          <span className="text-xs font-black uppercase tracking-[0.14em] text-black">
             {t('demo.ledger')}
           </span>
-          <span className="border-2 border-black bg-[var(--nb-cyan)] px-1.5 py-0.5 text-[9px] font-black uppercase tracking-[0.12em] text-black">
+          <span className="border-2 border-black bg-[var(--nb-cyan)] px-1.5 py-0.5 text-xs font-black uppercase tracking-[0.12em] text-black">
             {t('demo.badge')}
           </span>
         </div>
@@ -118,12 +118,17 @@ export default function DemoLedger() {
                     )}
                   >
                     <span className="flex min-w-0 items-center gap-2.5">
-                      <span className="shrink-0 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] px-1.5 py-0.5 font-mono text-[10px] font-black shadow-[2px_2px_0px_var(--nb-shadow)]">
+                      <span className="shrink-0 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] px-1.5 py-0.5 font-mono text-xs font-black shadow-[2px_2px_0px_var(--nb-shadow)]">
                         {run.ded_type}
                       </span>
                       <span className="min-w-0">
                         <span className="block truncate text-xs font-black uppercase">{run.faction}</span>
-                        <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
+                        <span
+                          className={cn(
+                            'font-mono text-xs font-bold uppercase tracking-wider',
+                            selected ? 'text-black/80' : 'text-[var(--nb-text-muted)]'
+                          )}
+                        >
                           {run.is_purchased ? t('demo.bought') : t('demo.free')}
                         </span>
                       </span>
@@ -132,7 +137,7 @@ export default function DemoLedger() {
                       <span
                         className={cn(
                           'font-mono text-xs font-black',
-                          profit >= 0 ? 'text-profit' : 'text-loss'
+                          selected ? 'text-black' : profit >= 0 ? 'text-profit' : 'text-loss'
                         )}
                       >
                         {formatISKSigned(profit)}
@@ -151,7 +156,7 @@ export default function DemoLedger() {
 
           <div className="flex w-full flex-col justify-center gap-3 bg-[var(--nb-hover-bg)] p-4 lg:w-2/5">
             <div>
-              <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[var(--nb-text-muted)]">
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-[var(--nb-text-muted)]">
                 {t('history.escalation')}
               </p>
               <p className="text-lg font-black uppercase leading-tight">
@@ -161,13 +166,13 @@ export default function DemoLedger() {
 
             <dl className="grid grid-cols-2 gap-3">
               <div>
-                <dt className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+                <dt className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                   {t('history.loot')}
                 </dt>
                 <dd className="font-mono text-xs font-bold">{formatISK(Number(active.loot_value))}</dd>
               </div>
               <div>
-                <dt className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+                <dt className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                   {t('history.capital')}
                 </dt>
                 <dd className="font-mono text-xs font-bold">
@@ -177,7 +182,7 @@ export default function DemoLedger() {
             </dl>
 
             <div className="border-t-2 border-dashed border-[var(--nb-border)] pt-3">
-              <p className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+              <p className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                 {t('history.pnl')}
               </p>
               <p

@@ -18,7 +18,7 @@ interface Props {
 }
 
 const headerCell =
-  'text-left text-[10px] font-black uppercase tracking-[0.12em] text-[var(--nb-text-muted)] px-3 py-3';
+  'text-left text-xs font-black uppercase tracking-[0.12em] text-[var(--nb-text-muted)] px-3 py-3';
 
 export default function RunTable({ runs, sort, onSort, onOpen, onEdit, onDelete }: Props) {
   const { t, locale } = useI18n();
@@ -74,7 +74,7 @@ export default function RunTable({ runs, sort, onSort, onOpen, onEdit, onDelete 
               className="nb-row group animate-fade-in"
               style={{ animationDelay: `${Math.min(i, 8) * 20}ms` }}
             >
-              <td className="whitespace-nowrap px-3 py-2.5 font-mono text-[11px] font-bold text-[var(--nb-text-faint)]">
+              <td className="whitespace-nowrap px-3 py-2.5 font-mono text-xs font-bold text-[var(--nb-text-faint)]">
                 {formatDayMonth(run.created_at, dateLocale)}
               </td>
 
@@ -110,7 +110,7 @@ export default function RunTable({ runs, sort, onSort, onOpen, onEdit, onDelete 
               <td className="px-3 py-2.5">
                 <span
                   className={cn(
-                    'nb-badge text-[9px]',
+                    'nb-badge text-xs',
                     run.is_purchased ? 'bg-[var(--nb-amber)]' : 'bg-[var(--nb-lime)]'
                   )}
                 >
@@ -124,7 +124,7 @@ export default function RunTable({ runs, sort, onSort, onOpen, onEdit, onDelete 
 
               <td
                 className={cn(
-                  'whitespace-nowrap px-3 py-2.5 text-right font-mono text-[13px] font-black',
+                  'whitespace-nowrap px-3 py-2.5 text-right font-mono text-sm font-black',
                   profit >= 0 ? 'text-profit' : 'text-loss'
                 )}
               >

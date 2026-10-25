@@ -42,14 +42,14 @@ export default function Footer() {
               <div className="flex items-center gap-3 bg-[var(--nb-hover-bg)] px-3 py-2 border-2 border-[var(--nb-border)] shadow-[2px_2px_0px_var(--nb-shadow)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--nb-shadow)] transition-all cursor-default">
                 <Heart className="size-4 text-red-500" fill="currentColor" />
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold uppercase text-[var(--nb-text-muted)] leading-none">{t('footer.isk')}</span>
+                  <span className="text-xs font-bold uppercase text-[var(--nb-text-muted)] leading-none">{t('footer.isk')}</span>
                   <span className="text-sm font-black text-[var(--nb-text)]">sankuuu</span>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-[var(--nb-surface)] px-3 py-2 border-2 border-[var(--nb-border)] shadow-[2px_2px_0px_var(--nb-shadow)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--nb-shadow)] transition-all group cursor-default">
                 <Mail className="size-4 text-[var(--nb-text-muted)] group-hover:text-[var(--nb-text)] transition-colors" />
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold uppercase text-[var(--nb-text-muted)] leading-none">{t('footer.mail')}</span>
+                  <span className="text-xs font-bold uppercase text-[var(--nb-text-muted)] leading-none">{t('footer.mail')}</span>
                   <span className="text-sm font-black text-[var(--nb-text)]">sankuuu</span>
                 </div>
               </div>
@@ -93,7 +93,7 @@ export default function Footer() {
         </div>
 
         {/* Disclaimer */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left text-[10px] sm:text-xs text-[var(--nb-text-muted)] font-medium">
+        <div className="pt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left text-xs sm:text-xs text-[var(--nb-text-muted)] font-medium">
           <ShieldAlert className="size-6 shrink-0 hidden sm:block" strokeWidth={1.5} />
           <p>
             EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. 

@@ -138,7 +138,7 @@ export default function RunHistory({ runs }: Props) {
             <h2 className="text-lg font-black uppercase leading-none tracking-tight text-black">
               {t('history.title')}
             </h2>
-            <p className="mt-1 font-mono text-[10px] font-bold uppercase tracking-wider text-black/70">
+            <p className="mt-1 font-mono text-xs font-bold uppercase tracking-wider text-black/70">
               {visibleRuns.length} {visibleRuns.length === 1 ? t('history.run') : t('history.runs')}
               {filtersActive && ` · ${sorted.length} ${t('history.search').toLowerCase()}`}
             </p>
@@ -180,7 +180,7 @@ export default function RunHistory({ runs }: Props) {
             <button
               type="button"
               onClick={resetFilters}
-              className="nb-btn nb-btn-secondary mt-1 px-3 py-1.5 text-[10px]"
+              className="nb-btn nb-btn-secondary mt-1 px-3 py-1.5 text-xs"
             >
               {t('history.reset')}
             </button>
@@ -212,7 +212,7 @@ export default function RunHistory({ runs }: Props) {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-auto flex items-center justify-between border-t-3 border-[var(--nb-border)] bg-[var(--nb-surface)] px-4 py-2.5">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
             {t('history.page')} {currentPage} {t('history.of')} {totalPages}
           </span>
           <div className="flex gap-2">
@@ -221,7 +221,7 @@ export default function RunHistory({ runs }: Props) {
               aria-label={t('history.prev')}
               disabled={currentPage <= 1}
               onClick={() => setPage(Math.max(1, currentPage - 1))}
-              className="border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] p-1.5 shadow-[2px_2px_0px_var(--nb-shadow)] transition-all hover-press enabled:hover:bg-[var(--nb-hover-bg)] disabled:opacity-40"
+              className="tap-target flex items-center justify-center border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] p-1.5 shadow-[2px_2px_0px_var(--nb-shadow)] transition-all hover-press enabled:hover:bg-[var(--nb-hover-bg)] disabled:opacity-40"
             >
               <ChevronLeft className="size-4" strokeWidth={2.5} aria-hidden="true" />
             </button>
@@ -230,7 +230,7 @@ export default function RunHistory({ runs }: Props) {
               aria-label={t('history.next')}
               disabled={currentPage >= totalPages}
               onClick={() => setPage(Math.min(totalPages, currentPage + 1))}
-              className="border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] p-1.5 shadow-[2px_2px_0px_var(--nb-shadow)] transition-all hover-press enabled:hover:bg-[var(--nb-hover-bg)] disabled:opacity-40"
+              className="tap-target flex items-center justify-center border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] p-1.5 shadow-[2px_2px_0px_var(--nb-shadow)] transition-all hover-press enabled:hover:bg-[var(--nb-hover-bg)] disabled:opacity-40"
             >
               <ChevronRight className="size-4" strokeWidth={2.5} aria-hidden="true" />
             </button>

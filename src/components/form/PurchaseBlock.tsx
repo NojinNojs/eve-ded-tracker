@@ -50,7 +50,7 @@ export default function PurchaseBlock({
           </p>
           <p
             className={cn(
-              'text-[11px] font-medium',
+              'text-xs font-medium',
               isPurchased ? 'text-black/60' : 'text-[var(--nb-text-muted)]'
             )}
           >
@@ -74,7 +74,7 @@ export default function PurchaseBlock({
             <div className="flex flex-col gap-1.5 border-t-3 border-[var(--nb-border)] p-3.5">
               <label
                 htmlFor="capital-cost"
-                className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]"
+                className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]"
               >
                 {t('form.capital')}
               </label>
@@ -88,7 +88,7 @@ export default function PurchaseBlock({
                 className="nb-input"
               />
               {capitalCost > 0 && (
-                <p className="font-mono text-[11px] font-bold text-[var(--nb-text-muted)]">
+                <p className="font-mono text-xs font-bold text-[var(--nb-text-muted)]">
                   ≈ {formatISKFull(capitalCost)}
                   {scale && (
                     <span className="ml-1 font-sans font-medium text-[var(--nb-text-faint)]">

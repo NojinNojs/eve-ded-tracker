@@ -11,7 +11,7 @@ interface Props {
 }
 
 const buttonClass =
-  'p-1.5 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[2px_2px_0px_var(--nb-shadow)] hover-press transition-all';
+  'tap-target flex items-center justify-center p-1.5 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] shadow-[2px_2px_0px_var(--nb-shadow)] hover-press transition-all';
 
 /** Edit + delete controls, shared by the table row and the mobile card. */
 export default function RunActions({ run, onEdit, onDelete }: Props) {

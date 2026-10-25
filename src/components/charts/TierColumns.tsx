@@ -20,7 +20,7 @@ interface Props {
 export default function TierColumns({ buckets, emptyLabel }: Props) {
   if (buckets.length === 0) {
     return (
-      <p className="py-8 text-center font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
+      <p className="py-8 text-center font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
         {emptyLabel}
       </p>
     );
@@ -85,12 +85,12 @@ export default function TierColumns({ buckets, emptyLabel }: Props) {
           const value = Number(bucket.profit);
           return (
             <div key={bucket.dedType} className="flex min-w-0 flex-1 flex-col items-center gap-1">
-              <span className="w-full border-2 border-[var(--nb-border)] bg-[var(--nb-text)] px-1 py-0.5 text-center font-mono text-[10px] font-black text-[var(--nb-surface)]">
+              <span className="w-full border-2 border-[var(--nb-border)] bg-[var(--nb-text)] px-1 py-0.5 text-center font-mono text-xs font-black text-[var(--nb-surface)]">
                 {bucket.dedType}
               </span>
               <span
                 className={cn(
-                  'w-full truncate text-center font-mono text-[10px] font-black',
+                  'w-full truncate text-center font-mono text-xs font-black',
                   value >= 0 ? 'text-profit' : 'text-loss'
                 )}
                 title={formatISKSigned(value)}
@@ -98,7 +98,7 @@ export default function TierColumns({ buckets, emptyLabel }: Props) {
                 {value > 0 ? '+' : ''}
                 {formatISKShort(value)}
               </span>
-              <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
                 ×{bucket.count}
               </span>
             </div>

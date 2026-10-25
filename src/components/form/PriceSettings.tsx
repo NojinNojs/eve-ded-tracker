@@ -36,11 +36,11 @@ export default function PriceSettings({
   return (
     <div className="flex flex-col gap-2 border-2 border-[var(--nb-border)] bg-[var(--nb-hover-bg)] p-2.5 shadow-[2px_2px_0px_var(--nb-shadow)]">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+        <span className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
           {t('form.pricing')}
         </span>
         <span
-          className="inline-flex items-center gap-1 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] px-1.5 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider"
+          className="inline-flex items-center gap-1 border-2 border-[var(--nb-border)] bg-[var(--nb-surface)] px-1.5 py-0.5 font-mono text-xs font-black uppercase tracking-wider"
           title={`${t('form.location')}: Jita`}
         >
           <MapPin className="size-2.5" strokeWidth={3} aria-hidden="true" />
@@ -52,7 +52,7 @@ export default function PriceSettings({
         <div className="flex flex-col gap-1">
           <label
             htmlFor="pricing-mode"
-            className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]"
+            className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]"
           >
             {t('form.price_mode')}
           </label>
@@ -88,7 +88,7 @@ export default function PriceSettings({
         <div className="flex flex-col gap-1">
           <label
             htmlFor="pricing-percent"
-            className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]"
+            className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]"
           >
             {t('form.percent')}
           </label>
@@ -102,7 +102,7 @@ export default function PriceSettings({
               onBlur={onPercentBlur}
               className="w-full bg-transparent py-1.5 text-center font-mono text-xs font-bold outline-none"
             />
-            <span aria-hidden="true" className="text-[10px] font-black text-[var(--nb-text-muted)]">
+            <span aria-hidden="true" className="text-xs font-black text-[var(--nb-text-muted)]">
               %
             </span>
           </div>

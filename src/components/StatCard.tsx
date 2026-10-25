@@ -26,7 +26,7 @@ export default function StatCard({ label, value, sub, icon: Icon, color, compact
       style={{ background: color }}
     >
       <div className="mb-3 flex items-start justify-between gap-2">
-        <span className="text-[10px] font-black uppercase leading-tight tracking-[0.12em] opacity-70 sm:text-xs">
+        <span className="text-xs font-black uppercase leading-tight tracking-[0.12em] opacity-70 sm:text-xs">
           {label}
         </span>
         <span
@@ -46,7 +46,7 @@ export default function StatCard({ label, value, sub, icon: Icon, color, compact
         )}
       </p>
 
-      <p className="mt-2 text-[11px] font-semibold leading-snug opacity-60">{sub}</p>
+      <p className="mt-2 text-xs font-semibold leading-snug opacity-60">{sub}</p>
     </div>
   );
 }

@@ -65,7 +65,7 @@ export default function ChangelogModal() {
               <ul className="flex flex-col gap-2">
                 {latestUpdate.features.map((feature, i) => (
                   <li key={i} className="text-sm font-medium text-[var(--nb-text-muted)] flex items-start gap-2">
-                    <span className="text-[var(--nb-cyan)] font-black mt-0.5">•</span> {feature}
+                    <span className="text-[var(--nb-accent-text)] font-black mt-0.5">•</span> {feature}
                   </li>
                 ))}
               </ul>

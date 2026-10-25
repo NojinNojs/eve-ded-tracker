@@ -84,7 +84,7 @@ export default function StatsDashboard({ runs }: Props) {
                 onClick={() => setRange(key)}
                 aria-pressed={active}
                 className={cn(
-                  'cursor-pointer px-3 py-1.5 text-[11px] font-black uppercase tracking-wider transition-colors duration-150 sm:text-xs',
+                  'cursor-pointer px-3 py-1.5 text-xs font-black uppercase tracking-wider transition-colors duration-150 sm:text-xs',
                   i > 0 && 'border-l-2 border-[var(--nb-border)]',
                   active
                     ? 'bg-[var(--nb-cyan)] text-[#1a1a1a]'
@@ -97,7 +97,7 @@ export default function StatsDashboard({ runs }: Props) {
           })}
         </div>
 
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--nb-text-faint)]">
+        <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--nb-text-faint)]">
           {insights.count} {insights.count === 1 ? t('history.run') : t('history.runs')} · Jita
         </p>
       </div>
@@ -142,7 +142,7 @@ export default function StatsDashboard({ runs }: Props) {
               <div className="h-[132px] w-full">
                 <Sparkline values={insights.cumulative.map((p) => p.value)} label={t('stat.trend')} />
               </div>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
+              <p className="mt-2 text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
                 {t('stat.trend.sub')}
               </p>
             </div>
@@ -159,12 +159,12 @@ export default function StatsDashboard({ runs }: Props) {
                   { key: t('history.free'), data: insights.free },
                 ].map((slot) => (
                   <div key={slot.key} className="flex items-baseline justify-between gap-2">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
                       {slot.key} · {slot.data.count}
                     </span>
                     <span
                       className={cn(
-                        'font-mono text-[11px] font-black',
+                        'font-mono text-xs font-black',
                         slot.data.profit >= 0 ? 'text-profit' : 'text-loss'
                       )}
                     >
@@ -181,7 +181,7 @@ export default function StatsDashboard({ runs }: Props) {
             <div className="nb-card nb-card--static p-4 sm:p-5">
               <div className="mb-4 flex items-center gap-3 border-b-3 border-[var(--nb-border)] pb-2">
                 <h3 className="text-xs font-black uppercase tracking-[0.12em]">{t('stat.by_site')}</h3>
-                <span className="hidden font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)] sm:inline">
+                <span className="hidden font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)] sm:inline">
                   {t('stat.by_site.hint')}
                 </span>
               </div>
@@ -192,15 +192,15 @@ export default function StatsDashboard({ runs }: Props) {
                     className="flex flex-col border-3 border-[var(--nb-border)] bg-[var(--nb-surface)] p-2.5 shadow-[3px_3px_0px_var(--nb-shadow)]"
                   >
                     <div className="mb-2 flex items-center justify-between gap-1">
-                      <span className="bg-[var(--nb-text)] px-1.5 py-0.5 font-mono text-[10px] font-black text-[var(--nb-surface)]">
+                      <span className="bg-[var(--nb-text)] px-1.5 py-0.5 font-mono text-xs font-black text-[var(--nb-surface)]">
                         {bucket.dedType}
                       </span>
-                      <span className="font-mono text-[10px] font-bold text-[var(--nb-text-muted)]">
+                      <span className="font-mono text-xs font-bold text-[var(--nb-text-muted)]">
                         ×{bucket.count}
                       </span>
                     </div>
                     <span
-                      className="mb-1 truncate text-[11px] font-bold uppercase text-[var(--nb-text)]"
+                      className="mb-1 truncate text-xs font-bold uppercase text-[var(--nb-text)]"
                       title={bucket.faction}
                     >
                       {bucket.faction}

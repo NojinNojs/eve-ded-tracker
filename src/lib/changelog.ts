@@ -8,6 +8,23 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: 'v1.7.0',
+    date: '2026-10-25',
+    title: 'Readable By Everyone, Loud For Nobody',
+    features: [
+      'New hero: the pitch on the left, a logged run on the right. You can see what the product does before scrolling.',
+      'Three steps under the CTA — paste the cargo, read the Jita price, log the run.',
+      'The sample numbers count up when they scroll into view, and the sections fade in with a short reveal.',
+      'Every label moved off 9–10px type onto a 12px floor, and body copy to 16px, so it reads at arm’s length on a phone or a laptop.',
+    ],
+    fixes: [
+      'Text that sat below WCAG AA is gone: cyan headings, muted labels and profit/loss figures now use dedicated text tokens.',
+      'Touch targets clear 44px on finger-driven screens; the language switch, history actions and pagination were the worst offenders.',
+      'The headline drops the stacked sticker treatments for one accent and one underline.',
+      'Animations respect prefers-reduced-motion — reveals resolve instantly and counters jump to their final value.',
+    ],
+  },
+  {
     version: 'v1.6.0',
     date: '2026-10-25',
     title: 'A Straighter Face',

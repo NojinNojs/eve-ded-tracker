@@ -20,7 +20,7 @@ export default function Sparkline({ values, label }: Props) {
   if (values.length < 2) {
     return (
       <div className="flex h-full min-h-[120px] items-center justify-center border-3 border-dashed border-[var(--nb-border)]/40">
-        <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
           Not enough runs to plot
         </span>
       </div>

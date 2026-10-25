@@ -26,7 +26,7 @@ type LootInputMode = 'janice' | 'manual';
 const selectContent =
   'border-3 border-[var(--nb-border)] rounded-none shadow-[4px_4px_0px_var(--nb-shadow)] bg-[var(--nb-surface)]';
 const selectItem = 'font-mono font-bold rounded-none hover:bg-[var(--nb-amber)] transition-colors';
-const labelClass = 'text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]';
+const labelClass = 'text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]';
 
 /** Clamp to the range Janice accepts (0–200%). */
 function clampPercent(raw: string): number {
@@ -191,7 +191,7 @@ export default function DedRunForm() {
           <h2 className="text-lg font-black uppercase leading-none tracking-tight text-black">
             {t('form.title')}
           </h2>
-          <p className="mt-1 font-mono text-[10px] font-bold uppercase tracking-wider text-black/70">
+          <p className="mt-1 font-mono text-xs font-bold uppercase tracking-wider text-black/70">
             {t('form.header.sub')}
           </p>
         </div>
@@ -267,7 +267,7 @@ export default function DedRunForm() {
                   aria-pressed={lootMode === tab.key}
                   onClick={() => setLootMode(tab.key)}
                   className={cn(
-                    'flex items-center gap-1.5 border-3 border-[var(--nb-border)] px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wider transition-all',
+                    'flex items-center gap-1.5 border-3 border-[var(--nb-border)] px-2.5 py-1.5 text-xs font-black uppercase tracking-wider transition-all',
                     lootMode === tab.key
                       ? `${tab.active} translate-x-[2px] translate-y-[2px] text-black shadow-none`
                       : 'bg-[var(--nb-surface)] text-[var(--nb-text-muted)] shadow-[3px_3px_0px_var(--nb-shadow)] hover:text-[var(--nb-text)]'
@@ -313,7 +313,7 @@ export default function DedRunForm() {
                 onBlur={() => setManualRaw((value) => formatISKInputDisplay(value))}
                 className="nb-input"
               />
-              <p className="text-[11px] font-medium leading-relaxed text-[var(--nb-text-faint)]">
+              <p className="text-xs font-medium leading-relaxed text-[var(--nb-text-faint)]">
                 {t('form.manual.hint')}
               </p>
             </div>
@@ -356,7 +356,7 @@ export default function DedRunForm() {
         {formError && (
           <p
             role="alert"
-            className="animate-shake flex items-center justify-center gap-1.5 border-2 border-red-500 bg-red-100 p-2 text-center text-[11px] font-bold uppercase text-red-700 dark:bg-red-900/30 dark:text-red-300"
+            className="animate-shake flex items-center justify-center gap-1.5 border-2 border-red-500 bg-red-100 p-2 text-center text-xs font-bold uppercase text-red-700 dark:bg-red-900/30 dark:text-red-300"
           >
             <AlertTriangle className="size-3.5" aria-hidden="true" />
             {formError}
@@ -381,7 +381,7 @@ export default function DedRunForm() {
         </button>
 
         {hints && !isSubmitting && (
-          <p className="text-center text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
+          <p className="text-center text-xs font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
             {hints}
           </p>
         )}

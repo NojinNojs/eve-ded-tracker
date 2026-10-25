@@ -56,11 +56,11 @@ export default function InsightStrip({ insights }: Props) {
             i > 0 ? 'sm:border-l-2' : 'sm:border-l-0'
           } border-[var(--nb-border)]`}
         >
-          <dt className="text-[9px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+          <dt className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
             {cell.label}
           </dt>
           <dd className="font-mono text-base font-black leading-none">{cell.value}</dd>
-          <dd className="hidden truncate font-mono text-[10px] font-bold text-[var(--nb-text-faint)] sm:block">
+          <dd className="hidden truncate font-mono text-xs font-bold text-[var(--nb-text-faint)] sm:block">
             {cell.hint}
           </dd>
         </div>

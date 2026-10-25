@@ -49,7 +49,7 @@ export default function RunDetailDialog({ run, onOpenChange }: Props) {
           <DialogTitle className="text-lg font-black uppercase tracking-tight text-black">
             {run ? `${run.ded_type} ${run.faction}` : t('history.detail.title')}
           </DialogTitle>
-          <DialogDescription className="font-mono text-[11px] font-bold uppercase tracking-wider text-black/70">
+          <DialogDescription className="font-mono text-xs font-bold uppercase tracking-wider text-black/70">
             {t('history.detail.title')}
           </DialogDescription>
         </DialogHeader>
@@ -57,14 +57,14 @@ export default function RunDetailDialog({ run, onOpenChange }: Props) {
         <dl className="divide-y-2 divide-[var(--nb-border)]">
           {rows.map((row) => (
             <div key={row.label} className="flex items-center justify-between gap-4 px-5 py-2.5">
-              <dt className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+              <dt className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                 {row.label}
               </dt>
               <dd className="font-mono text-xs font-bold">{row.value}</dd>
             </div>
           ))}
           <div className="flex items-center justify-between gap-4 bg-[var(--nb-hover-bg)] px-5 py-3">
-            <dt className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+            <dt className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
               {t('history.pnl')}
             </dt>
             <dd
@@ -83,20 +83,20 @@ export default function RunDetailDialog({ run, onOpenChange }: Props) {
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-blue-600 hover:underline dark:text-blue-400"
+              className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-blue-600 hover:underline dark:text-blue-400"
             >
               <ExternalLink className="size-3" />
               {t('form.janice_link')}
             </a>
           ) : (
-            <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-faint)]">
               no appraisal code
             </span>
           )}
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="nb-btn nb-btn-secondary px-4 py-2 text-[11px]"
+            className="nb-btn nb-btn-secondary px-4 py-2 text-xs"
           >
             {t('history.detail.close')}
           </button>

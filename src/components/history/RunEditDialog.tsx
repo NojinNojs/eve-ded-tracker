@@ -96,7 +96,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
           <DialogTitle className="text-base font-black uppercase tracking-tight text-black">
             {t('history.edit.title')}
           </DialogTitle>
-          <DialogDescription className="text-[11px] font-semibold text-black/70">
+          <DialogDescription className="text-xs font-semibold text-black/70">
             {t('history.edit.sub')}
           </DialogDescription>
         </DialogHeader>
@@ -104,7 +104,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
         <div className="flex flex-col gap-4 p-5">
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="edit-ded" className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+              <label htmlFor="edit-ded" className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                 {t('form.ded_level')}
               </label>
               <Select value={dedType} onValueChange={(v) => v && setDedType(v as DedType)}>
@@ -124,7 +124,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="edit-faction" className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+              <label htmlFor="edit-faction" className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                 {t('form.faction')}
               </label>
               <Select value={faction} onValueChange={(v) => v && setFaction(v as Faction)}>
@@ -163,7 +163,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
 
           {isPurchased && (
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="edit-capital" className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+              <label htmlFor="edit-capital" className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
                 {t('form.capital')}
               </label>
               <input
@@ -178,7 +178,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
           )}
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="edit-loot" className="text-[10px] font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
+            <label htmlFor="edit-loot" className="text-xs font-black uppercase tracking-[0.14em] text-[var(--nb-text-muted)]">
               {t('form.loot_value')}
             </label>
             <input
@@ -189,7 +189,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
               onBlur={() => setLootRaw(formatISKInputDisplay(lootRaw))}
               className="nb-input"
             />
-            <p className="font-mono text-[11px] font-bold text-[var(--nb-text-muted)]">
+            <p className="font-mono text-xs font-bold text-[var(--nb-text-muted)]">
               ≈ {formatISK(loot)}
             </p>
           </div>
@@ -212,7 +212,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="nb-btn nb-btn-secondary px-4 py-2 text-[11px]"
+            className="nb-btn nb-btn-secondary px-4 py-2 text-xs"
           >
             {t('history.cancel')}
           </button>
@@ -220,7 +220,7 @@ export default function RunEditDialog({ run, open, onOpenChange }: Props) {
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="nb-btn nb-btn-primary px-5 py-2 text-[11px]"
+            className="nb-btn nb-btn-primary px-5 py-2 text-xs"
           >
             {saving ? (
               <>

@@ -38,19 +38,19 @@ export default function RunCardList({ runs, onOpen, onEdit, onDelete }: Props) {
             >
               <div className="mb-2 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="bg-[var(--nb-text)] px-1.5 py-0.5 font-mono text-[11px] font-black text-[var(--nb-surface)]">
+                  <span className="bg-[var(--nb-text)] px-1.5 py-0.5 font-mono text-xs font-black text-[var(--nb-surface)]">
                     {run.ded_type}
                   </span>
                   <span
                     className={cn(
-                      'border-2 border-[var(--nb-border)] px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-black',
+                      'border-2 border-[var(--nb-border)] px-1.5 py-0.5 text-xs font-black uppercase tracking-wider text-black',
                       run.is_purchased ? 'bg-[var(--nb-amber)]' : 'bg-[var(--nb-lime)]'
                     )}
                   >
                     {run.is_purchased ? t('history.bought') : t('history.free')}
                   </span>
                 </div>
-                <span className="font-mono text-[10px] font-bold text-[var(--nb-text-muted)]">
+                <span className="font-mono text-xs font-bold text-[var(--nb-text-muted)]">
                   {formatDate(run.created_at, dateLocale)}
                 </span>
               </div>
@@ -58,7 +58,7 @@ export default function RunCardList({ runs, onOpen, onEdit, onDelete }: Props) {
               <p className="text-sm font-bold uppercase">{run.faction}</p>
 
               <div className="mt-1 flex items-baseline justify-between gap-2">
-                <span className="font-mono text-[10px] font-bold text-[var(--nb-text-muted)]">
+                <span className="font-mono text-xs font-bold text-[var(--nb-text-muted)]">
                   {formatISK(Number(run.loot_value))}
                 </span>
                 <span
@@ -78,13 +78,13 @@ export default function RunCardList({ runs, onOpen, onEdit, onDelete }: Props) {
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-wider text-blue-600 hover:underline dark:text-blue-400"
+                  className="inline-flex items-center gap-1 font-mono text-xs font-bold uppercase tracking-wider text-blue-600 hover:underline dark:text-blue-400"
                 >
                   <ExternalLink className="size-3" aria-hidden="true" />
                   {t('form.janice_link')}
                 </a>
               ) : (
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--nb-text-muted)]">
                   {run.pricing_mode} {run.pricing_percent}%
                 </span>
               )}
